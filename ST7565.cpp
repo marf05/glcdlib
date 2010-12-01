@@ -39,8 +39,8 @@ extern byte PROGMEM nums15x31[];
 byte gLCDbuf[1024];
 
 //#define slowspi
-//#define enablepartialupdate
-//#define tradesizeforspeed  // This needs enablepartialupdate
+#define enablepartialupdate
+#define tradesizeforspeed  // This needs enablepartialupdate
 
 #ifdef enablepartialupdate
 	byte xupdatemin;
@@ -401,9 +401,9 @@ void ST7565::setpixel(byte x, byte y, byte color) {
 
 	#ifdef enablepartialupdate
 		if (x<xupdatemin) xupdatemin=x;
-		else if (x>xupdatemax) xupdatemax=x;
+		if (x>xupdatemax) xupdatemax=x;
 		if (y<yupdatemin) yupdatemin=y;
-		else if (y>yupdatemax) yupdatemax=y;
+		if (y>yupdatemax) yupdatemax=y;
 	#endif
 }
 

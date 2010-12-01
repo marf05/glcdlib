@@ -216,7 +216,8 @@ void glcdremote::sendlcdmessage(byte *message, byte length) {
 	rf12_recvDone();
 	if (not(rf12_canSend())) {
 		Serial.println(" waiting");
-		while (not(rf12_canSend())) {};
+		while (not(rf12_canSend()))
+			rf12_recvDone();
 	}
 	rf12_sendStart(RemoteLCDhostID, message, length,1);
 	rf12_recvDone();

@@ -44,6 +44,8 @@ void loop () {
     delay(2000);
     for (int i=0;i<=21;i++) {
       glcd.setpixel(i*6,40,0);
+      glcd.display();
+      delay(500);
     }
     glcd.display();
     delay(2000);
