@@ -26,3 +26,5 @@
 #define REMOTELCDCLEARBUF 20 // 0 param
 #define REMOTELCDDRAWCHARX 21 // 3 params x,Y,char
 #define REMOTELCDDRAWSTRINGX 22 // 3+ x,y,length,str.....
+#define REMOTELCDSCROLLUP 23 // 1 y pixels
+#define REMOTELCDSCROLLDOWN 24 // 1 y pixels

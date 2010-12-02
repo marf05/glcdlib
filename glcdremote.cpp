@@ -212,6 +212,18 @@ void glcdremote::updatedisplayarea(byte x0,byte y0,byte x1,byte y1, byte reset=0
 	sendlcdmessage(msg,6);
 }
 
+void glcdremote::scrollup(byte y) {
+	msg[0]=REMOTELCDSCROLLUP;
+	msg[1]=y;
+	sendlcdmessage(msg,2);
+}
+
+void glcdremote::scrolldown(byte y) {
+	msg[0]=REMOTELCDSCROLLDOWN;
+	msg[1]=y;
+	sendlcdmessage(msg,2);
+}
+
 // clear everything
 void glcdremote::clear(void) {
   msg[0]=REMOTELCDCLEAR;

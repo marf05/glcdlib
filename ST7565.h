@@ -101,6 +101,12 @@ class ST7565 {
 	void setupdatearea(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1, uint8_t allowreduction);
 		
   void drawbitmap (uint8_t x, uint8_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color);
+ 
+ 	void drawcharx(uint8_t x, uint8_t y, char c);
+  void drawstringx(uint8_t x , uint8_t line, char *c);
+	void scrollup(uint8_t y);
+	void scrolldown(uint8_t y);
+  
 
  private:
   int8_t sid, sclk, a0, rst, cs;

@@ -116,5 +116,9 @@ void processmessage(byte *data) {
       break;
     case REMOTELCDCLEARBUF: glcd.clear_display();
       break;
+    case REMOTELCDSCROLLUP: glcd.scrollup(data[1]);
+      break;
+    case REMOTELCDSCROLLDOWN: glcd.scrolldown(data[1]);
+      break;
   }
 }

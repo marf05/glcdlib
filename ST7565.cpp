@@ -673,3 +673,53 @@ void ST7565::clear_display(void) {
     }     
   }
 }
+
+void ST7565::scrollup(byte y) {
+	#ifdef enablepartialupdate
+		xupdatemin=0;	// set the partial update region to the whole screen
+		yupdatemin=0;
+		xupdatemax=LCDWIDTH-1;
+		yupdatemax=LCDHEIGHT-1;
+	#endif
+	if ((y&7)==0) {     // easy one, whole line scroll.
+		for (byte l=0;l<8-(y>>3);l++) {
+			byte* p = gLCDbuf +(l * 128);
+			for (byte x=0;x<LCDWIDTH;x++) {
+				*(p+x)=*(p+(y>>3)*128+x);
+			}
+		}
+		for (byte l=8-(y>>3);l<8;l++) {
+			byte* p = gLCDbuf +(l * 128);
+			for (byte x=0;x<LCDWIDTH;x++) {
+				*(p+x)=0;
+			}
+		}
+	}
+	else {							// not so easy, pixel scroll
+	}
+}
+
+void ST7565::scrolldown(byte y) {
+	#ifdef enablepartialupdate
+		xupdatemin=0;	// set the partial update region to the whole screen
+		yupdatemin=0;
+		xupdatemax=LCDWIDTH-1;
+		yupdatemax=LCDHEIGHT-1;
+	#endif
+	if ((y&7)==0) {     // easy one, whole line scroll.
+		for (byte l=7;l>=(y>>3);l--) {
+			byte* p = gLCDbuf +(l * 128);
+			for (byte x=0;x<LCDWIDTH;x++) {
+				*(p+x)=*(p-(y>>3)*128+x);
+			}
+		}
+		for (byte l=0;l<(y>>3);l++) {
+			byte* p = gLCDbuf +(l * 128);
+			for (byte x=0;x<LCDWIDTH;x++) {
+				*(p+x)=0;
+			}
+		}
+	}
+	else {							// not so easy, pixel scroll
+	}
+}
