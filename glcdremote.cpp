@@ -211,19 +211,29 @@ void glcdremote::clear_display(void) {
 }
 
 void glcdremote::sendlcdmessage(byte *message, byte length) {
-	Serial.print("Message ID:");
-	Serial.println(message[0],DEC);
+//	Serial.print("Message ID:");
+//	Serial.println(message[0],DEC);
 	rf12_recvDone();
 	if (not(rf12_canSend())) {
-		Serial.println(" waiting");
+//		Serial.println(" waiting");
 		while (not(rf12_canSend()))
 			rf12_recvDone();
 	}
+/*
+	if (length<5) {
+		for (byte i=length;i<6;i++) msg[i]=0;
+		length=5;
+	}
+*/
+
 	rf12_sendStart(RemoteLCDhostID, message, length,1);
+
 	rf12_recvDone();
+/*
   for (byte i=0;i<length;i++) {
     Serial.print(message[i],DEC);
     Serial.print(",");
   }
   Serial.println("\n------------");
+*/
 }
