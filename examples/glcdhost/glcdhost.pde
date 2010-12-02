@@ -1,3 +1,10 @@
+/*
+$Id$
+
+gLCDhost Display driver host application.
+
+*/
+
 #define Node_ID 2
 #define Node_group 212
 
@@ -11,8 +18,6 @@ ST7565 glcd(14, 4, 17, 7);
 byte doublebuf[66];
 
 void setup () {
-//  Serial.begin(57600);
-//  Serial.println("\n[gLCD Host]");
   glcd.st7565_init();
   glcd.st7565_command(CMD_DISPLAY_ON);
   glcd.st7565_command(CMD_SET_ALLPTS_NORMAL);
@@ -51,46 +56,32 @@ void processmessage(byte *data) {
   switch (data[0])
   {
     case REMOTELCDINIT: glcd.st7565_init();
-//      Serial.println("init");
       break;
     case REMOTELCDCOMMAND: glcd.st7565_command(data[1]);
-//      Serial.println("Command");
       break;
     case REMOTELCDDATA: glcd.st7565_data(data[1]);
-//      Serial.println("data");
       break;
     case REMOTELCDSETBRIGHTNESS: glcd.st7565_set_brightness(data[1]);
-//      Serial.println("brightness");
       break;
     case REMOTELCDCLEAR: glcd.clear();
-//      Serial.println("clear");
       break;
     case REMOTELCDCLEARWHITE: glcd.clear_white();
-//      Serial.println("clear white");
       break;
     case REMOTELCDSETPIXEL: glcd.setpixel(data[1],data[2],data[3]);
-//      Serial.println("setpixel");
       break;
     case REMOTELCDDRAWLINE: glcd.drawline(data[1],data[2],data[3],data[4],data[5]);
-//      Serial.println("drawline");
       break;
     case REMOTELCDDRAWRECT: glcd.drawrect(data[1],data[2],data[3],data[4],data[5]);
-//      Serial.println("drawrect");
       break;
     case REMOTELCDFILLRECT: glcd.fillrect(data[1],data[2],data[3],data[4],data[5]);
-//      Serial.println("fillrect");
       break;
     case REMOTELCDDRAWCIRCLE: glcd.drawcircle(data[1],data[2],data[3],data[4]);
-//      Serial.println("drawcircle");
       break;
     case REMOTELCDFILLCIRCLE: glcd.fillcircle(data[1],data[2],data[3],data[4]);
-//      Serial.println("fillcircle");
       break;
     case REMOTELCDDRAWTRIANGLE: glcd.drawtriangle(data[1],data[2],data[3],data[4],data[5],data[6],data[7]);
-//      Serial.println("drawtriangle");
       break;
     case REMOTELCDFILLTRIANGLE: glcd.filltriangle(data[1],data[2],data[3],data[4],data[5],data[6],data[7]);
-//      Serial.println("filltriangle");
       break;
     case REMOTELCDDRAWCHAR: glcd.drawchar(data[1],data[2],data[3]);
       break;
@@ -117,17 +108,13 @@ void processmessage(byte *data) {
       }
       break;
     case REMOTELCDUPDATEAREA: glcd.updatedisplayarea(data[1],data[2],data[3],data[4],data[5]);
-//      Serial.println("updatedisplayarea");
       break;
     case REMOTELCDSETUPDATEAREA: glcd.setupdatearea(data[1],data[2],data[3],data[4],data[5]);
-//      Serial.println("setupdatearea");
       break;
 //        case REMOTELCDDRAWBMP: ;
     case REMOTELCDDISPLAY: glcd.display();
-//      Serial.println("display");
       break;
     case REMOTELCDCLEARBUF: glcd.clear_display();
-//      Serial.println("clear_display");
       break;
   }
 }

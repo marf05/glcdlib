@@ -127,11 +127,13 @@ void  ST7565::drawcharx(byte x, byte y, char c) {
 #endif
 	    byte line=y>>3;
 			byte oldbyte;
+			byte topmask=(0xff<<(8-y&7));
+			byte bottommask=(0xff>>(y&7));
 			byte* p = gLCDbuf + x + (line * 128);
 	    for (byte i =0; i<5; i++ ) {
-	      oldbyte=*p & (0xff<<(8-y&7));
+	      oldbyte=*p & topmask;
 	      *p = oldbyte | (pgm_read_byte(font5x7+(c*5)+i)>>(y&7));
-	      oldbyte=*(p+128) & (0xff>>(y&7));
+	      oldbyte=*(p+128) & bottommask;
 	      *(p+128) = oldbyte | (pgm_read_byte(font5x7+(c*5)+i)<<(8-y&7));
 	      p++;
 	    }
