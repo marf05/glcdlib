@@ -116,8 +116,9 @@ void ST7565::drawstringx(byte x, byte y, char *c) {
 
 void  ST7565::drawcharx(byte x, byte y, char c) {
 		if ((y&7)==0) drawchar(x,(y>>3),c);
-		else {
-		
+		else if ((y+8)<LCDHEIGHT) {
+
+			
 #ifdef enablepartialupdate
 	    if (x<xupdatemin) xupdatemin=x;
 	    if (y<yupdatemin) yupdatemin=y;
@@ -127,10 +128,10 @@ void  ST7565::drawcharx(byte x, byte y, char c) {
 	    byte line=y>>3;
 			byte oldbyte;
 			byte* p = gLCDbuf + x + (line * 128);
-	    for (byte i =0; i<5; i++ ) {    					// need to check the existing data preservation code
-	      oldbyte=*p & !(0xff>(y&7));							// not convinced it's working correctly.
+	    for (byte i =0; i<5; i++ ) {
+	      oldbyte=*p & (0xff<<(8-y&7));
 	      *p = oldbyte | (pgm_read_byte(font5x7+(c*5)+i)>>(y&7));
-	      oldbyte=*(p+128) & (0xff>((y-1)&7)); // -1 as the font is only 7 bits high.
+	      oldbyte=*(p+128) & (0xff>>(y&7));
 	      *(p+128) = oldbyte | (pgm_read_byte(font5x7+(c*5)+i)<<(8-y&7));
 	      p++;
 	    }
