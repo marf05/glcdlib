@@ -53,6 +53,10 @@ void loop () {
     for (int i=0;i<1000;i++) {
       glcd.setpixel(random(LCDWIDTH)-1,random(LCDHEIGHT)-1,1);
       glcd.display();
+      if (i%60==0) {
+        glcd.scrolldown(8);
+        delay(10);
+      }
     }
     delay(2000);
     glcd.clear();
