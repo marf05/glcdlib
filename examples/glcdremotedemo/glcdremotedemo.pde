@@ -44,12 +44,39 @@ void loop () {
     for (int i=0;i<=21;i++) {
       glcd.setpixel(i*6,40,0);
       glcd.display();
-//      delay(500);
     }
-    glcd.display();
     delay(2000);
     glcd.clear();
+    glcd.drawstring(8,4,"Is that snow?");
+    glcd.display();
+    delay(2000);
+    for (int i=0;i<1000;i++) {
+      glcd.setpixel(random(LCDWIDTH)-1,random(LCDHEIGHT)-1,1);
+      glcd.display();
+    }
+    delay(2000);
+    glcd.clear();
+    glcd.display();
+    glcd.drawstringx(0,30,"Some");
+    delay(50);
+    glcd.drawstringx(60,30,"text");
+    delay(50);
+    glcd.display();
+    delay(2000);
+    glcd.drawstringx(27,27,"wonky");
+    glcd.display();
+    delay(1000);
     
+    char *wonky="wonky";
+    for (byte i=0;i<5;i++) {
+      glcd.drawcharx(27+i*6,20-i,wonky[i]);
+      delay(50);
+      glcd.display();
+    }
+    delay(2000);
+
+    glcd.clear();  
+
     glcd.drawstring(8,4,"Rectangle?");
     glcd.display();
     delay(2000);

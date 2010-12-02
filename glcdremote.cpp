@@ -42,9 +42,28 @@ void glcdremote::drawstring(byte x, byte line, char *c) {
 }
 
 void  glcdremote::drawchar(byte x, byte line, char c) {
-	msg[0]=REMOTELCDDRAWSTRING;
+	msg[0]=REMOTELCDDRAWCHAR;
 	msg[1]=x;
 	msg[2]=line;
+	msg[3]=c;
+  sendlcdmessage(msg,4);
+}
+
+// pixel vertical aligned text functions
+
+void glcdremote::drawstringx(byte x, byte y, char *c) {
+	msg[0]=REMOTELCDDRAWSTRINGX;
+	msg[1]=x;
+	msg[2]=y;
+	byte p=4;
+  while (*c) msg[p++]=*c++;
+	msg[3]=p-4;
+	sendlcdmessage(msg,p);
+}
+void  glcdremote::drawcharx(byte x, byte y, char c) {
+	msg[0]=REMOTELCDDRAWCHARX;
+	msg[1]=x;
+	msg[2]=y;
 	msg[3]=c;
   sendlcdmessage(msg,4);
 }
@@ -59,6 +78,7 @@ void glcdremote::drawline(byte x0, byte y0, byte x1, byte y1,
 	msg[5]=color;
 	sendlcdmessage(msg,6);
 }
+
 
 // draw triangle
 void glcdremote::drawtriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color) {

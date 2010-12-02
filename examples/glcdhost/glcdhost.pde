@@ -93,7 +93,6 @@ void processmessage(byte *data) {
 //      Serial.println("filltriangle");
       break;
     case REMOTELCDDRAWCHAR: glcd.drawchar(data[1],data[2],data[3]);
-//      Serial.println("drawchar");
       break;
     case REMOTELCDDRAWSTRING:
       if (data[3]<65) {
@@ -103,7 +102,18 @@ void processmessage(byte *data) {
         }
         text[data[3]]=0;
         glcd.drawstring(data[1],data[2],text);
-//        Serial.println("drawstring");
+      }
+      break;
+    case REMOTELCDDRAWCHARX: glcd.drawcharx(data[1],data[2],data[3]);
+      break;
+    case REMOTELCDDRAWSTRINGX:
+      if (data[3]<65) {
+        char text[66];
+        for (int i=0;i<data[3];i++) {
+          text[i]=data[i+4];
+        }
+        text[data[3]]=0;
+        glcd.drawstringx(data[1],data[2],text);
       }
       break;
     case REMOTELCDUPDATEAREA: glcd.updatedisplayarea(data[1],data[2],data[3],data[4],data[5]);

@@ -84,6 +84,9 @@ class glcdremote {
 		
   void drawbitmap (uint8_t x, uint8_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color);
   
+ 	void drawcharx(uint8_t x, uint8_t y, char c);
+  void drawstringx(uint8_t x , uint8_t line, char *c);
+
   byte RemoteLCDhostID;
 
  	private:

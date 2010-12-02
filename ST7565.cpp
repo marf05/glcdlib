@@ -3,7 +3,11 @@ $Id$
 
 ST7565 LCD library!
 
-Copyright (C) 2010 Limor Fried, Adafruit Industries
+High speed SPI by Jean-Claude Wippler
+Partial screen update features, correction to Bresenham implimentation, triangle, and pixel vertical aligned
+text functions by Steve Evans
+
+Original library Copyright (C) 2010 Limor Fried, Adafruit Industries
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
@@ -38,9 +42,19 @@ extern byte PROGMEM nums15x31[];
 // the memory buffer for the LCD
 byte gLCDbuf[1024];
 
+// Switches from fast direct bit flipping to slower Arduino bit writes.
 //#define slowspi
+
+// This makes the library track where changes have occurred and only update the smallest rectangle required
+// If you are writing direct to the gLCDbuf you will either need to turn this off, or call setupdatearea() with the
+// area you have been working on so it can track the changes.
 #define enablepartialupdate
+
+// moves some of the enablepartialupdate logic further up the procedure tree. Removing it from setpixel and putting
+// it into the higher level routines such as draw/fill rect/circle/triangle. Makes the sketch larger, but faster in
+// graphical intensive applications.
 #define tradesizeforspeed  // This needs enablepartialupdate
+
 
 #ifdef enablepartialupdate
 	byte xupdatemin;
@@ -77,7 +91,7 @@ void  ST7565::drawchar(byte x, byte line, char c) {
 #ifdef enablepartialupdate
     if (x<xupdatemin) xupdatemin=x;
     if ((line<<3)<yupdatemin) yupdatemin=(line<<3);
-    if (((line<<3)+7)>yupdatemax) yupdatemax=(line<<3)+7;
+    if (((line<<3)+6)>yupdatemax) yupdatemax=(line<<3)+6;
     if ((x+4)>xupdatemax) xupdatemax=x+4;
 #endif
     byte* p = gLCDbuf + x + (line * 128);
@@ -85,7 +99,47 @@ void  ST7565::drawchar(byte x, byte line, char c) {
         *p++ = pgm_read_byte(font5x7+(c*5)+i);
 }
 
-// bresenham's algorithm - thx wikpedia
+void ST7565::drawstringx(byte x, byte y, char *c) {
+	if ((y&7)==0) drawstring(x,(y>>3),c);  
+  while (*c) {
+    drawcharx(x, y, *c++);
+    x += 6; // 6 pixels wide
+    if (x + 6 >= LCDWIDTH) {
+      x = 0;    // ran out of this line
+      if ((y+8) >= LCDHEIGHT)
+        return; // ran out of space :(
+      else y=y+8;
+    }
+  }
+}
+
+
+void  ST7565::drawcharx(byte x, byte y, char c) {
+		if ((y&7)==0) drawchar(x,(y>>3),c);
+		else {
+		
+#ifdef enablepartialupdate
+	    if (x<xupdatemin) xupdatemin=x;
+	    if (y<yupdatemin) yupdatemin=y;
+	    if ((y+6)>yupdatemax) yupdatemax=y+6;
+	    if ((x+4)>xupdatemax) xupdatemax=x+4;
+#endif
+	    byte line=y>>3;
+			byte oldbyte;
+			byte* p = gLCDbuf + x + (line * 128);
+	    for (byte i =0; i<5; i++ ) {    					// need to check the existing data preservation code
+	      oldbyte=*p & !(0xff>(y&7));							// not convinced it's working correctly.
+	      *p = oldbyte | (pgm_read_byte(font5x7+(c*5)+i)>>(y&7));
+	      oldbyte=*(p+128) & (0xff>((y-1)&7)); // -1 as the font is only 7 bits high.
+	      *(p+128) = oldbyte | (pgm_read_byte(font5x7+(c*5)+i)<<(8-y&7));
+	      p++;
+	    }
+	  }
+}
+
+
+
+// bresenham's algorithm - thx wikpedia <-- Pity you didn't quite get it right ;-)
 void ST7565::drawline(byte x0, byte y0, byte x1, byte y1, 
                       byte color) {
 #ifdef tradesizeforspeed
