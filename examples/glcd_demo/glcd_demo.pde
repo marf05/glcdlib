@@ -6,7 +6,7 @@
 #include <Ports.h>
 #include <RF12.h> // needed to avoid a linker error :(
 
-GLCD_ST7565 glcd(14, 4, 17, 7);
+GLCD_ST7565 glcd;
 
 void setup () {
     Serial.begin(57600);
@@ -14,11 +14,7 @@ void setup () {
     rf12_initialize(1, RF12_868MHZ);
     rf12_sleep(0);
     
-    glcd.st7565_init();
-    glcd.st7565_command(CMD_DISPLAY_ON);
-    glcd.st7565_command(CMD_SET_ALLPTS_NORMAL);
-    glcd.st7565_set_brightness(0x15);
-    glcd.clear();
+    glcd.begin();
 
     // draw a string at a location
     glcd.drawstring(40, 0, "ARDUINO");

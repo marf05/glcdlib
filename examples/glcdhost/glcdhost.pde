@@ -8,21 +8,17 @@ gLCDhost Display driver host application.
 #define Node_ID 2
 #define Node_group 212
 
-#include <glcdremotemsgs.h>
+#include <GLCD_proxymsgs.h>
 #include <GLCD_ST7565.h>
 #include <Ports.h>
 #include <RF12.h>
 
-GLCD_ST7565 glcd(14, 4, 17, 7);
+GLCD_ST7565 glcd;
 
 byte doublebuf[66];
 
 void setup () {
-  glcd.st7565_init();
-  glcd.st7565_command(CMD_DISPLAY_ON);
-  glcd.st7565_command(CMD_SET_ALLPTS_NORMAL);
-  glcd.st7565_set_brightness(0x015);
-  glcd.clear();
+  glcd.begin();
   glcd.display(); 
   glcd.drawstring(30,1,"JeePU Host");
   glcd.drawstring(16,3,"Group:");

@@ -1,43 +1,18 @@
-/*
-$Id$
+// orig comments at end of file
 
-GLCD_ST7565 LCD library!
-
-High speed SPI by Jean-Claude Wippler
-Partial screen update features, correction to Bresenham implimentation, triangle, and pixel vertical aligned
-text functions by Steve Evans
-
-Original library Copyright (C) 2010 Limor Fried, Adafruit Industries
-
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
-
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-
-// some of this code was written by <cstone@pobox.com> originally; it is in the public domain.
-*/
-
-//#include <Wire.h>
 #include <avr/pgmspace.h>
 #include <WProgram.h>
 #include <util/delay.h>
 #include <stdlib.h>
-
 #include "GLCD_ST7565.h"
+
+#define PIN_SID  14
+#define PIN_SCLK 4
+#define PIN_A0   17
+#define PIN_RST  7
 
 // a 5x7 font table
 extern byte PROGMEM font5x7[];
-// a 5x7 font table
-extern byte PROGMEM nums15x31[];
 
 // the memory buffer for the LCD
 byte gLCDbuf[1024];
@@ -62,6 +37,14 @@ byte gLCDbuf[1024];
 	byte yupdatemin;
 	byte yupdatemax;
 #endif
+
+void GLCD_ST7565::begin() {
+    st7565_init();
+    st7565_command(CMD_DISPLAY_ON);
+    st7565_command(CMD_SET_ALLPTS_NORMAL);
+    st7565_set_brightness(0x15);
+    clear();
+}
 
 void GLCD_ST7565::drawbitmap(byte x, byte y, 
                         const byte *bitmap, byte w, byte h,
@@ -479,19 +462,14 @@ void GLCD_ST7565::setpixelnoregiontrack(byte x, byte y, byte color) {
 
 void GLCD_ST7565::st7565_init(void) {
   // set pin directions
-  pinMode(sid,  OUTPUT);
-  pinMode(sclk, OUTPUT);
-  pinMode(a0,   OUTPUT);
-  pinMode(rst,  OUTPUT);
-  pinMode(cs,   OUTPUT);
+  pinMode(PIN_SID,  OUTPUT);
+  pinMode(PIN_SCLK, OUTPUT);
+  pinMode(PIN_A0,   OUTPUT);
+  pinMode(PIN_RST,  OUTPUT);
 
-  // toggle RST low to reset; CS low so it'll listen to us
-  if (cs > 0)
-    digitalWrite(cs, LOW);
-
-  digitalWrite(rst, LOW);
+  digitalWrite(PIN_RST, LOW);
   _delay_ms(500);
-  digitalWrite(rst, HIGH);
+  digitalWrite(PIN_RST, HIGH);
 
   st7565_command(CMD_SET_BIAS_7);
   st7565_command(CMD_SET_ADC_NORMAL);
@@ -511,7 +489,7 @@ void GLCD_ST7565::st7565_init(void) {
 
 inline void GLCD_ST7565::spiwrite(byte c) {
 #ifdef slowspi
-  shiftOut(sid, sclk, MSBFIRST, c);
+  shiftOut(PIN_SID, PIN_SCLK, MSBFIRST, c);
 #else
   for (byte mask = 0x80; mask != 0; mask >>= 1) {
     bitWrite(PORTC, 0, c & mask);
@@ -529,7 +507,7 @@ inline void GLCD_ST7565::spiwrite(byte c) {
 
 void GLCD_ST7565::st7565_command(byte c) {
 #ifdef slowspi
-  digitalWrite(a0, LOW);
+  digitalWrite(PIN_A0, LOW);
 #else
   bitClear(PORTC, 3);
 #endif
@@ -538,7 +516,7 @@ void GLCD_ST7565::st7565_command(byte c) {
 
 void GLCD_ST7565::st7565_data(byte c) {
 #ifdef slowspi
-  digitalWrite(a0, HIGH);
+  digitalWrite(PIN_A0, HIGH);
 #else
   bitSet(PORTC, 3);
 #endif
@@ -785,3 +763,31 @@ void GLCD_ST7565::scrollright(byte x) {
 		}
 	}
 }
+
+/*
+$Id$
+
+GLCD_ST7565 LCD library!
+
+High speed SPI by Jean-Claude Wippler
+Partial screen update features, correction to Bresenham implimentation, triangle, and pixel vertical aligned
+text functions by Steve Evans
+
+Original library Copyright (C) 2010 Limor Fried, Adafruit Industries
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+// some of this code was written by <cstone@pobox.com> originally; it is in the public domain.
+*/

@@ -74,10 +74,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 class GLCD_ST7565 {
  public:
-  GLCD_ST7565(int8_t SID, int8_t SCLK, int8_t A0, int8_t RST, int8_t CS) :sid(SID), sclk(SCLK), a0(A0), rst(RST), cs(CS) {}
-  GLCD_ST7565(int8_t SID, int8_t SCLK, int8_t A0, int8_t RST)            :sid(SID), sclk(SCLK), a0(A0), rst(RST), cs(-1) {}
+  GLCD_ST7565 () {}
 
-
+  void begin();
   void st7565_init(void);
   void st7565_command(uint8_t c);
   void st7565_data(uint8_t c);
@@ -111,7 +110,6 @@ class GLCD_ST7565 {
   
 
  private:
-  int8_t sid, sclk, a0, rst, cs;
   void spiwrite(uint8_t c);
   void setpixelnoregiontrack (uint8_t x, uint8_t y, uint8_t color);
 	void drawtriangleline(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t firstline, uint8_t *points,

@@ -2,17 +2,13 @@
 #include <Ports.h>
 #include <RF12.h> // needed to avoid a linker error :(
 
-GLCD_ST7565 glcd(14, 4, 17, 7);
+GLCD_ST7565 glcd;
 
 int d=4;
 byte x=0;
 
 void setup () {
-    glcd.st7565_init();
-    glcd.st7565_command(CMD_DISPLAY_ON);
-    glcd.st7565_command(CMD_SET_ALLPTS_NORMAL);
-    glcd.st7565_set_brightness(0x015);
-    glcd.clear();
+    glcd.begin();
     glcd.display();
 }
 

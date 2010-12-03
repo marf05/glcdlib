@@ -1,9 +1,8 @@
-#include <glcdremote.h>
+#include <GLCD_proxy.h>
 #include <Ports.h>
 #include <RF12.h>
 
-glcdremote glcd(14, 4, 17, 7); // the params here are meaningless to glcdremote, but left to make
-                               // it interchangeable.
+GLCD_proxy glcd;
 
 void setup () {
 //    Serial.begin(57600);
@@ -17,11 +16,7 @@ void setup () {
 // That's all you need for remote display.   
     
     
-    glcd.st7565_init();
-    glcd.st7565_command(CMD_DISPLAY_ON);
-    glcd.st7565_command(CMD_SET_ALLPTS_NORMAL);
-    glcd.st7565_set_brightness(0x015);
-    glcd.clear();
+    glcd.begin();
     glcd.display();    
 }
 

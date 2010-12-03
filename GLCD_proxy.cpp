@@ -1,7 +1,7 @@
 /*
 $Id$
 
-glcdremote Remote LCD library!
+GLCD_proxy Remote LCD library!
 
 */
 
@@ -12,12 +12,20 @@ glcdremote Remote LCD library!
 
 #include <RF12.h>
 
-#include "glcdremote.h"
-#include "glcdremotemsgs.h"
+#include "GLCD_proxy.h"
+#include "GLCD_proxymsgs.h"
 
 byte msg[66];
 
-void glcdremote::drawbitmap(byte x, byte y, 
+void GLCD_proxy::begin() {
+    st7565_init();
+    st7565_command(CMD_DISPLAY_ON);
+    st7565_command(CMD_SET_ALLPTS_NORMAL);
+    st7565_set_brightness(0x15);
+    clear();    
+}
+
+void GLCD_proxy::drawbitmap(byte x, byte y, 
                         const byte *bitmap, byte w, byte h,
                         byte color) {
 /* Need to work out the messaging for bitmap sending
@@ -31,7 +39,7 @@ void glcdremote::drawbitmap(byte x, byte y,
 */
 }
 
-void glcdremote::drawstring(byte x, byte line, char *c) {
+void GLCD_proxy::drawstring(byte x, byte line, char *c) {
 	msg[0]=REMOTELCDDRAWSTRING;
 	msg[1]=x;
 	msg[2]=line;
@@ -41,7 +49,7 @@ void glcdremote::drawstring(byte x, byte line, char *c) {
 	sendlcdmessage(msg,p);
 }
 
-void  glcdremote::drawchar(byte x, byte line, char c) {
+void  GLCD_proxy::drawchar(byte x, byte line, char c) {
 	msg[0]=REMOTELCDDRAWCHAR;
 	msg[1]=x;
 	msg[2]=line;
@@ -51,7 +59,7 @@ void  glcdremote::drawchar(byte x, byte line, char c) {
 
 // pixel vertical aligned text functions
 
-void glcdremote::drawstringx(byte x, byte y, char *c) {
+void GLCD_proxy::drawstringx(byte x, byte y, char *c) {
 	msg[0]=REMOTELCDDRAWSTRINGX;
 	msg[1]=x;
 	msg[2]=y;
@@ -60,7 +68,7 @@ void glcdremote::drawstringx(byte x, byte y, char *c) {
 	msg[3]=p-4;
 	sendlcdmessage(msg,p);
 }
-void  glcdremote::drawcharx(byte x, byte y, char c) {
+void  GLCD_proxy::drawcharx(byte x, byte y, char c) {
 	msg[0]=REMOTELCDDRAWCHARX;
 	msg[1]=x;
 	msg[2]=y;
@@ -68,7 +76,7 @@ void  glcdremote::drawcharx(byte x, byte y, char c) {
   sendlcdmessage(msg,4);
 }
 
-void glcdremote::drawline(byte x0, byte y0, byte x1, byte y1, 
+void GLCD_proxy::drawline(byte x0, byte y0, byte x1, byte y1, 
                       byte color) {
 	msg[0]=REMOTELCDDRAWLINE;
 	msg[1]=x0;
@@ -81,7 +89,7 @@ void glcdremote::drawline(byte x0, byte y0, byte x1, byte y1,
 
 
 // draw triangle
-void glcdremote::drawtriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color) {
+void GLCD_proxy::drawtriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color) {
 	msg[0]=REMOTELCDDRAWTRIANGLE;
 	msg[1]=x0;
 	msg[2]=y0;
@@ -93,7 +101,7 @@ void glcdremote::drawtriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte 
 	sendlcdmessage(msg,8);
 }
 
-void glcdremote::filltriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color) {
+void GLCD_proxy::filltriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color) {
 	msg[0]=REMOTELCDFILLTRIANGLE;
 	msg[1]=x0;
 	msg[2]=y0;
@@ -106,7 +114,7 @@ void glcdremote::filltriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte 
 }
 
 // filled rectangle
-void glcdremote::fillrect(byte x, byte y, byte w, byte h, 
+void GLCD_proxy::fillrect(byte x, byte y, byte w, byte h, 
                       byte color) {
 	msg[0]=REMOTELCDFILLRECT;
 	msg[1]=x;
@@ -118,7 +126,7 @@ void glcdremote::fillrect(byte x, byte y, byte w, byte h,
 }
 
 // draw a rectangle
-void glcdremote::drawrect(byte x, byte y, byte w, byte h, 
+void GLCD_proxy::drawrect(byte x, byte y, byte w, byte h, 
                       byte color) {
 	msg[0]=REMOTELCDDRAWRECT;
 	msg[1]=x;
@@ -130,7 +138,7 @@ void glcdremote::drawrect(byte x, byte y, byte w, byte h,
 }
 
 // draw a circle outline
-void glcdremote::drawcircle(byte x0, byte y0, byte r, 
+void GLCD_proxy::drawcircle(byte x0, byte y0, byte r, 
                         byte color) {
 	msg[0]=REMOTELCDDRAWCIRCLE;
 	msg[1]=x0;
@@ -140,7 +148,7 @@ void glcdremote::drawcircle(byte x0, byte y0, byte r,
 	sendlcdmessage(msg,5);
 }
 
-void glcdremote::fillcircle(byte x0, byte y0, byte r, byte color) {
+void GLCD_proxy::fillcircle(byte x0, byte y0, byte r, byte color) {
 
 	msg[0]=REMOTELCDFILLCIRCLE;
 	msg[1]=x0;
@@ -151,7 +159,7 @@ void glcdremote::fillcircle(byte x0, byte y0, byte r, byte color) {
 }
 
 // the most basic function, set a single pixel
-void glcdremote::setpixel(byte x, byte y, byte color) {
+void GLCD_proxy::setpixel(byte x, byte y, byte color) {
 	msg[0]=REMOTELCDSETPIXEL;
 	msg[1]=x;
 	msg[2]=y;
@@ -159,7 +167,7 @@ void glcdremote::setpixel(byte x, byte y, byte color) {
 	sendlcdmessage(msg,4);
 }
 
-void glcdremote::st7565_init(void) {
+void GLCD_proxy::st7565_init(void) {
 	msg[0]=REMOTELCDSETUPDATEAREA;
 	msg[1]=0;
 	msg[2]=0;
@@ -169,30 +177,30 @@ void glcdremote::st7565_init(void) {
 	sendlcdmessage(msg,6);
 }
 
-void glcdremote::st7565_command(byte c) {
+void GLCD_proxy::st7565_command(byte c) {
 	msg[0]=REMOTELCDCOMMAND;
 	msg[1]=c;
 	sendlcdmessage(msg,2);
 }
 
-void glcdremote::st7565_data(byte c) {
+void GLCD_proxy::st7565_data(byte c) {
 	msg[0]=REMOTELCDDATA;
 	msg[1]=c;
 	sendlcdmessage(msg,2);
 }
 
-void glcdremote::st7565_set_brightness(byte val) {
+void GLCD_proxy::st7565_set_brightness(byte val) {
 	msg[0]=REMOTELCDSETBRIGHTNESS;
 	msg[1]=val;
 	sendlcdmessage(msg,2);
 }
 
-void glcdremote::display(void) {
+void GLCD_proxy::display(void) {
 	msg[0]=REMOTELCDDISPLAY;
 	sendlcdmessage(msg,1);	
 }
 
-void glcdremote::setupdatearea(byte x0,byte y0,byte x1,byte y1, byte allowreduction=0) {
+void GLCD_proxy::setupdatearea(byte x0,byte y0,byte x1,byte y1, byte allowreduction=0) {
 	msg[0]=REMOTELCDSETUPDATEAREA;
 	msg[1]=x0;
 	msg[2]=y0;
@@ -202,7 +210,7 @@ void glcdremote::setupdatearea(byte x0,byte y0,byte x1,byte y1, byte allowreduct
 	sendlcdmessage(msg,6);
 }
 
-void glcdremote::updatedisplayarea(byte x0,byte y0,byte x1,byte y1, byte reset=0) {
+void GLCD_proxy::updatedisplayarea(byte x0,byte y0,byte x1,byte y1, byte reset=0) {
 	msg[0]=REMOTELCDUPDATEAREA;
 	msg[1]=x0;
 	msg[2]=y0;
@@ -212,49 +220,49 @@ void glcdremote::updatedisplayarea(byte x0,byte y0,byte x1,byte y1, byte reset=0
 	sendlcdmessage(msg,6);
 }
 
-void glcdremote::scrollup(byte y) {
+void GLCD_proxy::scrollup(byte y) {
 	msg[0]=REMOTELCDSCROLLUP;
 	msg[1]=y;
 	sendlcdmessage(msg,2);
 }
 
-void glcdremote::scrolldown(byte y) {
+void GLCD_proxy::scrolldown(byte y) {
 	msg[0]=REMOTELCDSCROLLDOWN;
 	msg[1]=y;
 	sendlcdmessage(msg,2);
 }
 
-void glcdremote::scrollleft(byte x) {
+void GLCD_proxy::scrollleft(byte x) {
 	msg[0]=REMOTELCDSCROLLLEFT;
 	msg[1]=x;
 	sendlcdmessage(msg,2);
 }
 
-void glcdremote::scrollright(byte x) {
+void GLCD_proxy::scrollright(byte x) {
 	msg[0]=REMOTELCDSCROLLRIGHT;
 	msg[1]=x;
 	sendlcdmessage(msg,2);
 }
 
 // clear everything
-void glcdremote::clear(void) {
+void GLCD_proxy::clear(void) {
   msg[0]=REMOTELCDCLEAR;
 	sendlcdmessage(msg,1);
 }
 
 // clear everything
-void glcdremote::clear_white(void) {
+void GLCD_proxy::clear_white(void) {
   msg[0]=REMOTELCDCLEARWHITE;
 	sendlcdmessage(msg,1);
 }
 
 // this doesnt touch the buffer, just clears the display RAM - might be handy
-void glcdremote::clear_display(void) {
+void GLCD_proxy::clear_display(void) {
   msg[0]=REMOTELCDCLEARBUF;
 	sendlcdmessage(msg,1);
 }
 
-void glcdremote::sendlcdmessage(byte *message, byte length) {
+void GLCD_proxy::sendlcdmessage(byte *message, byte length) {
 //	Serial.print("Message ID:");
 //	Serial.println(message[0],DEC);
 	rf12_recvDone();

@@ -1,7 +1,7 @@
 /*
 $Id$
 
-glcdremote Remote LCD library!
+GLCD_proxy Remote LCD library!
 
 */
 
@@ -55,11 +55,11 @@ glcdremote Remote LCD library!
 #define CMD_NOP					0xE3		// 22
 #define CMD_TEST				0xF0		// 23
 
-class glcdremote {
+class GLCD_proxy {
  public:
-  glcdremote(int8_t SID, int8_t SCLK, int8_t A0, int8_t RST, int8_t CS) :sid(SID), sclk(SCLK), a0(A0), rst(RST), cs(CS) {}
-  glcdremote(int8_t SID, int8_t SCLK, int8_t A0, int8_t RST)            :sid(SID), sclk(SCLK), a0(A0), rst(RST), cs(-1) {}
+  GLCD_proxy() {}
 
+  void begin();
   void st7565_init(void);
   void st7565_command(uint8_t c);
   void st7565_data(uint8_t c);
@@ -94,6 +94,5 @@ class glcdremote {
   byte RemoteLCDhostID;
 
  	private:
-  int8_t sid, sclk, a0, rst, cs;
 	void sendlcdmessage(byte *message, byte length);  
 };

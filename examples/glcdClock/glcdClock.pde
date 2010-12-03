@@ -8,7 +8,7 @@
 #include <avr/pgmspace.h>
 #include "digits.h"
 
-GLCD_ST7565 glcd(14, 4, 17, 7);
+GLCD_ST7565 glcd;
 RTC_Millis rtc;
 
 static void drawDigit(byte x, byte d) {
@@ -31,11 +31,7 @@ void setup () {
     
     rtc.begin(DateTime (__DATE__, __TIME__));
     
-    glcd.st7565_init();
-    glcd.st7565_command(CMD_DISPLAY_ON);
-    glcd.st7565_command(CMD_SET_ALLPTS_NORMAL);
-    glcd.st7565_set_brightness(0x15);
-    glcd.clear();
+    glcd.begin();
 
     drawDigit(0, 1);
 
