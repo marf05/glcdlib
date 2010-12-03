@@ -11,6 +11,8 @@
 #define PIN_A0   17
 #define PIN_RST  7
 
+#define swap(a, b) { uint8_t t = a; a = b; b = t; }
+
 // a 5x7 font table
 extern byte PROGMEM font5x7[];
 

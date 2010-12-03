@@ -7,8 +7,6 @@ GLCD_proxy Remote LCD library!
 
 #include <WProgram.h>
 
-#define swap(a, b) { uint8_t t = a; a = b; b = t; }
-
 #define BLACK					0
 #define WHITE					1
 
