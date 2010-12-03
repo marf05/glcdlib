@@ -106,6 +106,8 @@ class ST7565 {
   void drawstringx(uint8_t x , uint8_t line, char *c);
 	void scrollup(uint8_t y);
 	void scrolldown(uint8_t y);
+	void scrollleft(uint8_t x);
+	void scrollright(uint8_t x);
   
 
  private:

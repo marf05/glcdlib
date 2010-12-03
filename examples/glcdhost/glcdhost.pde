@@ -120,5 +120,9 @@ void processmessage(byte *data) {
       break;
     case REMOTELCDSCROLLDOWN: glcd.scrolldown(data[1]);
       break;
+    case REMOTELCDSCROLLLEFT: glcd.scrollleft(data[1]);
+      break;
+    case REMOTELCDSCROLLRIGHT: glcd.scrollright(data[1]);
+      break;
   }
 }

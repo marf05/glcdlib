@@ -224,6 +224,18 @@ void glcdremote::scrolldown(byte y) {
 	sendlcdmessage(msg,2);
 }
 
+void glcdremote::scrollleft(byte x) {
+	msg[0]=REMOTELCDSCROLLLEFT;
+	msg[1]=x;
+	sendlcdmessage(msg,2);
+}
+
+void glcdremote::scrollright(byte x) {
+	msg[0]=REMOTELCDSCROLLRIGHT;
+	msg[1]=x;
+	sendlcdmessage(msg,2);
+}
+
 // clear everything
 void glcdremote::clear(void) {
   msg[0]=REMOTELCDCLEAR;

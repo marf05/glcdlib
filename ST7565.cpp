@@ -681,7 +681,7 @@ void ST7565::scrollup(byte y) {
 		xupdatemax=LCDWIDTH-1;
 		yupdatemax=LCDHEIGHT-1;
 	#endif
-	if ((y&7)==0) {     // easy one, whole line scroll.
+	if (y>7) {     // easy one, whole line scroll. This routine is used to do the whole line jumps.
 		for (byte l=0;l<8-(y>>3);l++) {
 			byte* p = gLCDbuf +(l * 128);
 			for (byte x=0;x<LCDWIDTH;x++) {
@@ -695,7 +695,20 @@ void ST7565::scrollup(byte y) {
 			}
 		}
 	}
-	else {							// not so easy, pixel scroll
+	if ((y&7)!=0) {			// And now the fine scroll bit
+		byte bits=y&7;
+		for (byte l=0;l<7;l++) {
+			byte* p = gLCDbuf +(l * 128);
+			for (byte x=0;x<LCDWIDTH;x++) {
+				byte top=*(p+x)<<bits;
+				byte bottom=*(p+x+128)>>(8-bits);
+				*(p+x)=top | bottom;								
+			}			
+		}	
+		byte* p = gLCDbuf +(7 * 128);
+		for (byte x=0;x<LCDWIDTH;x++) {
+			*(p+x)=*(p+x)<<bits;
+		}
 	}
 }
 
@@ -706,7 +719,7 @@ void ST7565::scrolldown(byte y) {
 		xupdatemax=LCDWIDTH-1;
 		yupdatemax=LCDHEIGHT-1;
 	#endif
-	if ((y&7)==0) {     // easy one, whole line scroll.
+	if (y>7) {     // easy one, whole line scroll.
 		for (byte l=7;l>=(y>>3);l--) {
 			byte* p = gLCDbuf +(l * 128);
 			for (byte x=0;x<LCDWIDTH;x++) {
@@ -720,6 +733,55 @@ void ST7565::scrolldown(byte y) {
 			}
 		}
 	}
-	else {							// not so easy, pixel scroll
+	if ((y&7)!=0) {			// And now the fine scroll bit
+		byte bits=y&7;
+		for (byte l=7;l>0;l--) {
+			byte* p = gLCDbuf +(l * 128);
+			for (byte x=0;x<LCDWIDTH;x++) {
+				byte bottom=*(p+x)>>bits;
+				byte top=*(p+x-128)<<(8-bits);
+				*(p+x)=top | bottom;								
+			}			
+		}	
+		byte* p = gLCDbuf;
+		for (byte x=0;x<LCDWIDTH;x++) {
+			*(p+x)=*(p+x)>>bits;
+		}
+	}
+}
+
+void ST7565::scrollleft(byte x) {
+	#ifdef enablepartialupdate
+		xupdatemin=0;	// set the partial update region to the whole screen
+		yupdatemin=0;
+		xupdatemax=LCDWIDTH-1;
+		yupdatemax=LCDHEIGHT-1;
+	#endif
+	for (byte l=0;l<=7;l++) {
+		byte* p = gLCDbuf +(l * 128);
+		for (byte b=0;b<(LCDWIDTH-x);b++) {
+			*(p+b)=*(p+b+x);
+		}
+		for (byte b=(LCDWIDTH-x);b<LCDWIDTH;b++) {
+			*(p+b)=0;
+		}
+	}
+}
+
+void ST7565::scrollright(byte x) {
+	#ifdef enablepartialupdate
+		xupdatemin=0;	// set the partial update region to the whole screen
+		yupdatemin=0;
+		xupdatemax=LCDWIDTH-1;
+		yupdatemax=LCDHEIGHT-1;
+	#endif
+	for (byte l=0;l<=7;l++) {
+		byte* p = gLCDbuf +(l * 128);
+		for (byte b=(LCDWIDTH-1);b>=x;b--) {
+			*(p+b)=*(p+b-x);
+		}
+		for (byte b=0;b<x;b++) {
+			*(p+b)=0;
+		}
 	}
 }

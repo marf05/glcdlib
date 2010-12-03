@@ -86,8 +86,10 @@ class glcdremote {
   
  	void drawcharx(uint8_t x, uint8_t y, char c);
   void drawstringx(uint8_t x , uint8_t line, char *c);
-	void scrollup(byte y);
-	void scrolldown(byte y);
+	void scrollup(uint8_t y);
+	void scrolldown(uint8_t y);
+	void scrollleft(uint8_t x);
+	void scrollright(uint8_t x);
 	
   byte RemoteLCDhostID;
 

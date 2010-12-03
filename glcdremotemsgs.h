@@ -28,3 +28,5 @@
 #define REMOTELCDDRAWSTRINGX 22 // 3+ x,y,length,str.....
 #define REMOTELCDSCROLLUP 23 // 1 y pixels
 #define REMOTELCDSCROLLDOWN 24 // 1 y pixels
+#define REMOTELCDSCROLLLEFT 25 // 1 x pixels
+#define REMOTELCDSCROLLRIGHT 26 // 1 x pixels
