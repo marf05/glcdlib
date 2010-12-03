@@ -1,7 +1,7 @@
 /*
 $Id$
 
-ST7565 LCD library!
+GLCD_ST7565 LCD library!
 
 High speed SPI by Jean-Claude Wippler
 Partial screen update features, correction to Bresenham implimentation, triangle, and pixel vertical aligned
@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <util/delay.h>
 #include <stdlib.h>
 
-#include "ST7565.h"
+#include "GLCD_ST7565.h"
 
 // a 5x7 font table
 extern byte PROGMEM font5x7[];
@@ -63,7 +63,7 @@ byte gLCDbuf[1024];
 	byte yupdatemax;
 #endif
 
-void ST7565::drawbitmap(byte x, byte y, 
+void GLCD_ST7565::drawbitmap(byte x, byte y, 
                         const byte *bitmap, byte w, byte h,
                         byte color) {
   for (byte j=0; j<h; j++) {
@@ -75,7 +75,7 @@ void ST7565::drawbitmap(byte x, byte y,
   }
 }
 
-void ST7565::drawstring(byte x, byte line, char *c) {
+void GLCD_ST7565::drawstring(byte x, byte line, char *c) {
   while (*c) {
     drawchar(x, line, *c++);
     x += 6; // 6 pixels wide
@@ -87,7 +87,7 @@ void ST7565::drawstring(byte x, byte line, char *c) {
   }
 }
 
-void  ST7565::drawchar(byte x, byte line, char c) {
+void  GLCD_ST7565::drawchar(byte x, byte line, char c) {
 #ifdef enablepartialupdate
     if (x<xupdatemin) xupdatemin=x;
     if ((line<<3)<yupdatemin) yupdatemin=(line<<3);
@@ -99,7 +99,7 @@ void  ST7565::drawchar(byte x, byte line, char c) {
         *p++ = pgm_read_byte(font5x7+(c*5)+i);
 }
 
-void ST7565::drawstringx(byte x, byte y, char *c) {
+void GLCD_ST7565::drawstringx(byte x, byte y, char *c) {
 	if ((y&7)==0) drawstring(x,(y>>3),c);  
   while (*c) {
     drawcharx(x, y, *c++);
@@ -114,7 +114,7 @@ void ST7565::drawstringx(byte x, byte y, char *c) {
 }
 
 
-void  ST7565::drawcharx(byte x, byte y, char c) {
+void  GLCD_ST7565::drawcharx(byte x, byte y, char c) {
 		if ((y&7)==0) drawchar(x,(y>>3),c);
 		else if ((y+8)<LCDHEIGHT) {
 
@@ -143,7 +143,7 @@ void  ST7565::drawcharx(byte x, byte y, char c) {
 
 
 // bresenham's algorithm - thx wikpedia <-- Pity you didn't quite get it right ;-)
-void ST7565::drawline(byte x0, byte y0, byte x1, byte y1, 
+void GLCD_ST7565::drawline(byte x0, byte y0, byte x1, byte y1, 
                       byte color) {
 #ifdef tradesizeforspeed
 	if (x0>xupdatemax) xupdatemax=x0;
@@ -203,13 +203,13 @@ void ST7565::drawline(byte x0, byte y0, byte x1, byte y1,
 }
 
 // draw triangle
-void ST7565::drawtriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte colour) {
+void GLCD_ST7565::drawtriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte colour) {
 	drawline(x0,y0,x1,y1,colour);
 	drawline(x1,y1,x2,y2,colour);
 	drawline(x2,y2,x0,y0,colour);
 }
 
-void ST7565::filltriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte colour) {
+void GLCD_ST7565::filltriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte colour) {
 	byte points[LCDHEIGHT]; // 64 bytes taken to store line points needed for fill.
 	if (y2<y1) { swap(y1,y2); swap(x1,x2); } // first we need to find the highest and lowest point
 	if (y1<y0) { swap(y1,y0); swap(x1,x0); } // a little unrolled bubble will do for 3 points
@@ -220,7 +220,7 @@ void ST7565::filltriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, 
 	drawtriangleline(x1,y1,x2,y2,0,points,colour);
 }
 
-void ST7565::drawtriangleline(byte x0, byte y0, byte x1, byte y1, byte firstline, byte *points,
+void GLCD_ST7565::drawtriangleline(byte x0, byte y0, byte x1, byte y1, byte firstline, byte *points,
                       byte color) {
 #ifdef tradesizeforspeed
 	if (x0>xupdatemax) xupdatemax=x0;
@@ -281,7 +281,7 @@ void ST7565::drawtriangleline(byte x0, byte y0, byte x1, byte y1, byte firstline
 
 
 // filled rectangle
-void ST7565::fillrect(byte x, byte y, byte w, byte h, 
+void GLCD_ST7565::fillrect(byte x, byte y, byte w, byte h, 
                       byte color) {
   // stupidest version - just pixels - but fast with internal buffer!
 #ifdef tradesizeforspeed
@@ -303,7 +303,7 @@ void ST7565::fillrect(byte x, byte y, byte w, byte h,
 }
 
 // draw a rectangle
-void ST7565::drawrect(byte x, byte y, byte w, byte h, 
+void GLCD_ST7565::drawrect(byte x, byte y, byte w, byte h, 
                       byte color) {
   // stupidest version - just pixels - but fast with internal buffer!
 #ifdef tradesizeforspeed
@@ -335,7 +335,7 @@ void ST7565::drawrect(byte x, byte y, byte w, byte h,
 }
 
 // draw a circle outline
-void ST7565::drawcircle(byte x0, byte y0, byte r, 
+void GLCD_ST7565::drawcircle(byte x0, byte y0, byte r, 
                         byte color) {
 #ifdef tradesizeforspeed
 	if ((x0-r)<xupdatemin) xupdatemin=(x0-r);
@@ -395,7 +395,7 @@ void ST7565::drawcircle(byte x0, byte y0, byte r,
   }
 }
 
-void ST7565::fillcircle(byte x0, byte y0, byte r, byte color) {
+void GLCD_ST7565::fillcircle(byte x0, byte y0, byte r, byte color) {
 
 #ifdef tradesizeforspeed
 	if ((x0-r)<xupdatemin) xupdatemin=(x0-r);
@@ -446,7 +446,7 @@ void ST7565::fillcircle(byte x0, byte y0, byte r, byte color) {
 }
 
 // the most basic function, set a single pixel
-void ST7565::setpixel(byte x, byte y, byte color) {
+void GLCD_ST7565::setpixel(byte x, byte y, byte color) {
   if ((x >= LCDWIDTH) || (y >= LCDHEIGHT))
     return;
 
@@ -464,7 +464,7 @@ void ST7565::setpixel(byte x, byte y, byte color) {
 	#endif
 }
 
-void ST7565::setpixelnoregiontrack(byte x, byte y, byte color) {
+void GLCD_ST7565::setpixelnoregiontrack(byte x, byte y, byte color) {
 #ifdef tradesizeforspeed
   if ((x >= LCDWIDTH) || (y >= LCDHEIGHT))
     return;
@@ -477,7 +477,7 @@ void ST7565::setpixelnoregiontrack(byte x, byte y, byte color) {
 #endif
 }
 
-void ST7565::st7565_init(void) {
+void GLCD_ST7565::st7565_init(void) {
   // set pin directions
   pinMode(sid,  OUTPUT);
   pinMode(sclk, OUTPUT);
@@ -509,7 +509,7 @@ void ST7565::st7565_init(void) {
 	#endif
 }
 
-inline void ST7565::spiwrite(byte c) {
+inline void GLCD_ST7565::spiwrite(byte c) {
 #ifdef slowspi
   shiftOut(sid, sclk, MSBFIRST, c);
 #else
@@ -527,7 +527,7 @@ inline void ST7565::spiwrite(byte c) {
 #endif
 }
 
-void ST7565::st7565_command(byte c) {
+void GLCD_ST7565::st7565_command(byte c) {
 #ifdef slowspi
   digitalWrite(a0, LOW);
 #else
@@ -536,7 +536,7 @@ void ST7565::st7565_command(byte c) {
   spiwrite(c);
 }
 
-void ST7565::st7565_data(byte c) {
+void GLCD_ST7565::st7565_data(byte c) {
 #ifdef slowspi
   digitalWrite(a0, HIGH);
 #else
@@ -545,12 +545,12 @@ void ST7565::st7565_data(byte c) {
   spiwrite(c);
 }
 
-void ST7565::st7565_set_brightness(byte val) {
+void GLCD_ST7565::st7565_set_brightness(byte val) {
     st7565_command(CMD_SET_VOLUME_FIRST);
     st7565_command(CMD_SET_VOLUME_SECOND | (val & 0x3F));
 }
 
-void ST7565::display(void) {
+void GLCD_ST7565::display(void) {
   byte c, p;
 #ifdef enablepartialupdate
 	if (xupdatemin<=xupdatemax) {
@@ -585,7 +585,7 @@ void ST7565::display(void) {
 #endif
 }
 
-void ST7565::setupdatearea(byte x0,byte y0,byte x1,byte y1, byte allowreduction=0) {
+void GLCD_ST7565::setupdatearea(byte x0,byte y0,byte x1,byte y1, byte allowreduction=0) {
 #ifdef enablepartialupdate
 	if ((x0==0xff) && (allowreduction!=0)) {
 		xupdatemax=0;			// reset area to nothing
@@ -613,7 +613,7 @@ void ST7565::setupdatearea(byte x0,byte y0,byte x1,byte y1, byte allowreduction=
 #endif
 }
 
-void ST7565::updatedisplayarea(byte x0,byte y0,byte x1,byte y1, byte reset=0) {
+void GLCD_ST7565::updatedisplayarea(byte x0,byte y0,byte x1,byte y1, byte reset=0) {
 #ifdef enablepartialupdate
   byte c, p;
 	if ((x0<=x1) && (y0<=y1)) {
@@ -637,7 +637,7 @@ void ST7565::updatedisplayarea(byte x0,byte y0,byte x1,byte y1, byte reset=0) {
 }
 
 // clear everything
-void ST7565::clear(void) {
+void GLCD_ST7565::clear(void) {
     memset(gLCDbuf, 0x00, 1024);
 		#ifdef enablepartialupdate
 			xupdatemin=0;	// set the partial update region to the whole screen
@@ -649,7 +649,7 @@ void ST7565::clear(void) {
 
 
 // clear everything
-void ST7565::clear_white(void) {
+void GLCD_ST7565::clear_white(void) {
     memset(gLCDbuf, 0XFF, 1024);
 		#ifdef enablepartialupdate
 			xupdatemin=0;	// set the partial update region to the whole screen
@@ -661,7 +661,7 @@ void ST7565::clear_white(void) {
 
 
 // this doesnt touch the buffer, just clears the display RAM - might be handy
-void ST7565::clear_display(void) {
+void GLCD_ST7565::clear_display(void) {
   byte p, c;
   
   for(p = 0; p < 8; p++) {
@@ -674,7 +674,7 @@ void ST7565::clear_display(void) {
   }
 }
 
-void ST7565::scrollup(byte y) {
+void GLCD_ST7565::scrollup(byte y) {
 	#ifdef enablepartialupdate
 		xupdatemin=0;	// set the partial update region to the whole screen
 		yupdatemin=0;
@@ -712,7 +712,7 @@ void ST7565::scrollup(byte y) {
 	}
 }
 
-void ST7565::scrolldown(byte y) {
+void GLCD_ST7565::scrolldown(byte y) {
 	#ifdef enablepartialupdate
 		xupdatemin=0;	// set the partial update region to the whole screen
 		yupdatemin=0;
@@ -750,7 +750,7 @@ void ST7565::scrolldown(byte y) {
 	}
 }
 
-void ST7565::scrollleft(byte x) {
+void GLCD_ST7565::scrollleft(byte x) {
 	#ifdef enablepartialupdate
 		xupdatemin=0;	// set the partial update region to the whole screen
 		yupdatemin=0;
@@ -768,7 +768,7 @@ void ST7565::scrollleft(byte x) {
 	}
 }
 
-void ST7565::scrollright(byte x) {
+void GLCD_ST7565::scrollright(byte x) {
 	#ifdef enablepartialupdate
 		xupdatemin=0;	// set the partial update region to the whole screen
 		yupdatemin=0;

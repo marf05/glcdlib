@@ -2,13 +2,13 @@
 // 2010-11-18 <jcw@equi4.com> http://opensource.org/licenses/mit-license.php
 // $Id$
 
-#include <ST7565.h>
+#include <GLCD_ST7565.h>
 #include <RTClib.h>
 #include <Wire.h> // needed to avoid a linker error :(
 #include <avr/pgmspace.h>
 #include "digits.h"
 
-ST7565 glcd(14, 4, 17, 7);
+GLCD_ST7565 glcd(14, 4, 17, 7);
 RTC_Millis rtc;
 
 static void drawDigit(byte x, byte d) {

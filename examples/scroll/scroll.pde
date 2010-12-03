@@ -1,8 +1,8 @@
-#include <ST7565.h>
+#include <GLCD_ST7565.h>
 #include <Ports.h>
 #include <RF12.h> // needed to avoid a linker error :(
 
-ST7565 glcd(14, 4, 17, 7);
+GLCD_ST7565 glcd(14, 4, 17, 7);
 
 int d=4;
 byte x=0;

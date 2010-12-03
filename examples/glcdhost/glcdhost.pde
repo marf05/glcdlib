@@ -9,11 +9,11 @@ gLCDhost Display driver host application.
 #define Node_group 212
 
 #include <glcdremotemsgs.h>
-#include <ST7565.h>
+#include <GLCD_ST7565.h>
 #include <Ports.h>
 #include <RF12.h>
 
-ST7565 glcd(14, 4, 17, 7);
+GLCD_ST7565 glcd(14, 4, 17, 7);
 
 byte doublebuf[66];
 

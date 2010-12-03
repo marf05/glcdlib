@@ -2,11 +2,11 @@
 // 2010-11-14 <jcw@equi4.com> http://opensource.org/licenses/mit-license.php
 // $Id$
 
-#include "ST7565.h"
+#include "GLCD_ST7565.h"
 #include <Ports.h>
 #include <RF12.h> // needed to avoid a linker error :(
 
-ST7565 glcd(14, 4, 17, 7);
+GLCD_ST7565 glcd(14, 4, 17, 7);
 
 void setup () {
     Serial.begin(57600);

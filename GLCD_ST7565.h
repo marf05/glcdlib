@@ -72,10 +72,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #define CMD_NOP					0xE3		// 22
 #define CMD_TEST				0xF0		// 23
 
-class ST7565 {
+class GLCD_ST7565 {
  public:
-  ST7565(int8_t SID, int8_t SCLK, int8_t A0, int8_t RST, int8_t CS) :sid(SID), sclk(SCLK), a0(A0), rst(RST), cs(CS) {}
-  ST7565(int8_t SID, int8_t SCLK, int8_t A0, int8_t RST)            :sid(SID), sclk(SCLK), a0(A0), rst(RST), cs(-1) {}
+  GLCD_ST7565(int8_t SID, int8_t SCLK, int8_t A0, int8_t RST, int8_t CS) :sid(SID), sclk(SCLK), a0(A0), rst(RST), cs(CS) {}
+  GLCD_ST7565(int8_t SID, int8_t SCLK, int8_t A0, int8_t RST)            :sid(SID), sclk(SCLK), a0(A0), rst(RST), cs(-1) {}
 
 
   void st7565_init(void);
