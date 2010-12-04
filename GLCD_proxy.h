@@ -54,43 +54,41 @@ GLCD_proxy Remote LCD library!
 #define CMD_TEST				0xF0		// 23
 
 class GLCD_proxy {
- public:
-  GLCD_proxy() {}
+public:
+    GLCD_proxy(byte nodeId) : remoteId (nodeId) {}
 
-  void begin();
-  void st7565_init(void);
-  void st7565_command(uint8_t c);
-  void st7565_data(uint8_t c);
-  void st7565_set_brightness(uint8_t val);
-  void clear_display(void);
-  void clear_white();
-  void clear();
-  void display();
+    void begin();
+    void st7565_command(byte c);
+    void st7565_data(byte c);
+    void st7565_set_brightness(byte val);
+    void clear_display(void);
+    void clear_white();
+    void clear();
+    void display();
 
-  void setpixel   (uint8_t x , uint8_t y   , uint8_t color);
-  void fillcircle (uint8_t x0, uint8_t y0  , uint8_t r , uint8_t color);
-  void drawcircle (uint8_t x0, uint8_t y0  , uint8_t r , uint8_t color);
-  void drawrect   (uint8_t x , uint8_t y   , uint8_t w , uint8_t h , uint8_t color);
-  void fillrect   (uint8_t x , uint8_t y   , uint8_t w , uint8_t h , uint8_t color);
-  void drawline   (uint8_t x0, uint8_t y0  , uint8_t x1, uint8_t y1, uint8_t color);
-  void drawchar   (uint8_t x , uint8_t line, char c );
-  void drawstring (uint8_t x , uint8_t line, char *c);
-	void drawtriangle (uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t colour);
-	void filltriangle (uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t colour);
-	void updatedisplayarea(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1,uint8_t reset);
-	void setupdatearea(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1, uint8_t allowreduction);
-		
-  void drawbitmap (uint8_t x, uint8_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color);
-  
- 	void drawcharx(uint8_t x, uint8_t y, char c);
-  void drawstringx(uint8_t x , uint8_t line, char *c);
-	void scrollup(uint8_t y);
-	void scrolldown(uint8_t y);
-	void scrollleft(uint8_t x);
-	void scrollright(uint8_t x);
-	
-  byte RemoteLCDhostID;
+    void setpixel   (byte x, byte y, byte color);
+    void fillcircle (byte x0, byte y0, byte r, byte color);
+    void drawcircle (byte x0, byte y0, byte r, byte color);
+    void drawrect   (byte x, byte y, byte w, byte h, byte color);
+    void fillrect   (byte x, byte y, byte w, byte h, byte color);
+    void drawline   (byte x0, byte y0, byte x1, byte y1, byte color);
+    void drawchar   (byte x, byte line, char c );
+    void drawstring (byte x, byte line, char *c);
+    void drawtriangle (byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color);
+    void filltriangle (byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color);
+    void updatedisplayarea(byte x0,byte y0,byte x1,byte y1,byte reset =0);
+    void setupdatearea(byte x0,byte y0,byte x1,byte y1, byte allowreduction =0);
 
- 	private:
-	void sendlcdmessage(byte *message, byte length);  
+    void drawbitmap (byte x, byte y, const byte *bitmap, byte w, byte h, byte color);
+    void drawcharx(byte x, byte y, char c);
+    void drawstringx(byte x, byte line, char *c);
+    void scrollup(byte y);
+    void scrolldown(byte y);
+    void scrollleft(byte x);
+    void scrollright(byte x);
+
+private:
+	void sendlcdmessage(byte length);  
+
+    byte remoteId;
 };

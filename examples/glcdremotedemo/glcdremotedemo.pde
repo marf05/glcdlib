@@ -2,19 +2,14 @@
 #include <Ports.h>
 #include <RF12.h>
 
-GLCD_proxy glcd;
+GLCD_proxy glcd (2); // ID of remote LCD host
 
 void setup () {
 //    Serial.begin(57600);
 //    Serial.println("Remote LCD test");
 
-// The following lines are the only addition to a locally running glcd sketch
+// the following lines is the only addition to a locally running glcd sketch
     rf12_initialize(1, RF12_868MHZ, 212);
-    delay(1000);
-    rf12_recvDone();
-    glcd.RemoteLCDhostID=2; // really should make this a procedure call :)
-// That's all you need for remote display.   
-    
     
     glcd.begin();
     glcd.display();    
