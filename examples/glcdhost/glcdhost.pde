@@ -19,7 +19,6 @@ byte doublebuf[66];
 
 void setup () {
   glcd.begin();
-  glcd.display(); 
   glcd.drawstring(30,1,"JeePU Host");
   glcd.drawstring(16,3,"Group:");
   char t[4];
@@ -51,14 +50,6 @@ void loop () {
 void processmessage(byte *data) {
   switch (data[0])
   {
-    case REMOTELCDINIT: glcd.st7565_init();
-      break;
-    case REMOTELCDCOMMAND: glcd.st7565_command(data[1]);
-      break;
-    case REMOTELCDDATA: glcd.st7565_data(data[1]);
-      break;
-    case REMOTELCDSETBRIGHTNESS: glcd.st7565_set_brightness(data[1]);
-      break;
     case REMOTELCDCLEAR: glcd.clear();
       break;
     case REMOTELCDCLEARWHITE: glcd.clear_white();

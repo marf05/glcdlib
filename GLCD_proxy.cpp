@@ -155,34 +155,6 @@ void GLCD_proxy::setpixel(byte x, byte y, byte color) {
 	sendlcdmessage(4);
 }
 
-void GLCD_proxy::st7565_init() {
-	msg[0]=REMOTELCDSETUPDATEAREA;
-	msg[1]=0;
-	msg[2]=0;
-	msg[3]=LCDWIDTH-1;
-	msg[4]=LCDHEIGHT-1;
-	msg[5]=1;
-	sendlcdmessage(6);
-}
-
-void GLCD_proxy::st7565_command(byte c) {
-	msg[0]=REMOTELCDCOMMAND;
-	msg[1]=c;
-	sendlcdmessage(2);
-}
-
-void GLCD_proxy::st7565_data(byte c) {
-	msg[0]=REMOTELCDDATA;
-	msg[1]=c;
-	sendlcdmessage(2);
-}
-
-void GLCD_proxy::st7565_set_brightness(byte val) {
-	msg[0]=REMOTELCDSETBRIGHTNESS;
-	msg[1]=val;
-	sendlcdmessage(2);
-}
-
 void GLCD_proxy::display() {
 	msg[0]=REMOTELCDDISPLAY;
 	sendlcdmessage(1);	

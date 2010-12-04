@@ -2,11 +2,6 @@
 #define LCDHEIGHT				64
 
 // messages
-#define REMOTELCDINIT 0
-#define REMOTELCDCOMMAND 1 // 1 param
-#define REMOTELCDDATA 2 // 1 param
-#define REMOTELCDSETBRIGHTNESS 3 // 1 param
-
 #define REMOTELCDCLEAR 4 // 0 param
 #define REMOTELCDCLEARWHITE 5 // 0 param
 #define REMOTELCDSETPIXEL 	6 // 3 params x,y,colour
