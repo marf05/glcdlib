@@ -92,25 +92,27 @@ class GLCD_ST7565 {
   void drawline   (uint8_t x0, uint8_t y0  , uint8_t x1, uint8_t y1, uint8_t color);
   void drawchar   (uint8_t x , uint8_t line, char c );
   void drawstring (uint8_t x , uint8_t line, char *c);
-	void drawtriangle (uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t colour);
-	void filltriangle (uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t colour);
-	void updatedisplayarea(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1,uint8_t reset);
-	void setupdatearea(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1, uint8_t allowreduction);
+  void drawstring_p (byte x, byte line, char *c);
+  void drawtriangle (uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t colour);
+  void filltriangle (uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t colour);
+  void updatedisplayarea(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1,uint8_t reset);
+  void setupdatearea(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1, uint8_t allowreduction);
 		
   void drawbitmap (uint8_t x, uint8_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color);
  
- 	void drawcharx(uint8_t x, uint8_t y, char c);
-  void drawstringx(uint8_t x , uint8_t line, char *c);
-	void scrollup(uint8_t y);
-	void scrolldown(uint8_t y);
-	void scrollleft(uint8_t x);
-	void scrollright(uint8_t x);
+  void drawcharx(uint8_t x, uint8_t y, char c);
+  void drawstringx(uint8_t x , uint8_t y, char *c);
+  void drawstringx_p (byte x, byte y, char *c);
+  void scrollup(uint8_t y);
+  void scrolldown(uint8_t y);
+  void scrollleft(uint8_t x);
+  void scrollright(uint8_t x);
   
 
  private:
   void spiwrite(uint8_t c);
   void setpixelnoregiontrack (uint8_t x, uint8_t y, uint8_t color);
-	void drawtriangleline(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t firstline, uint8_t *points,
+  void drawtriangleline(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t firstline, uint8_t *points,
                       uint8_t color);
   
 

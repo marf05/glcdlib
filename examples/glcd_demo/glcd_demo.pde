@@ -5,6 +5,7 @@
 #include "GLCD_ST7565.h"
 #include <Ports.h>
 #include <RF12.h> // needed to avoid a linker error :(
+#include <avr/pgmspace.h>
 
 GLCD_ST7565 glcd;
 
@@ -15,12 +16,16 @@ void setup () {
     rf12_sleep(0);
     
     glcd.begin();
+#if 1    
+    pinMode(3, OUTPUT);
+    digitalWrite(3, 1); // turn the backlight on
+#endif
 
-    // draw a string at a location
-    glcd.drawstring(40, 0, "ARDUINO");
-    glcd.drawstring(10, 2, "ST7565 128x64 GLCD");
-    glcd.drawstring(22, 4, "Graphics Board");
-    glcd.drawstring(20, 6, "JeeLabs.org/gb1");
+    // draw a string at a location, use _p variant to reduce RAM use
+    glcd.drawstring_p(40, 0, PSTR("ARDUINO"));
+    glcd.drawstring_p(10, 2, PSTR("ST7565 128x64 GLCD"));
+    glcd.drawstring_p(22, 4, PSTR("Graphics Board"));
+    glcd.drawstring_p(20, 6, PSTR("JeeLabs.org/gb1"));
 
     glcd.drawcircle(5, 5, 5, WHITE);
     glcd.fillcircle(121, 5, 5, WHITE);

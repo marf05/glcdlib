@@ -72,6 +72,21 @@ void GLCD_ST7565::drawstring(byte x, byte line, char *c) {
   }
 }
 
+void GLCD_ST7565::drawstring_p(byte x, byte line, char *c) {
+  for (;;) {
+    char ch = pgm_read_byte(c++);
+    if (ch == 0)
+        break;
+    drawchar(x, line, ch);
+    x += 6; // 6 pixels wide
+    if (x + 6 >= LCDWIDTH) {
+      x = 0;    // ran out of this line
+      if (++line >= (LCDHEIGHT/8))
+        return; // ran out of space :(
+    }
+  }
+}
+
 void  GLCD_ST7565::drawchar(byte x, byte line, char c) {
 #ifdef enablepartialupdate
     if (x<xupdatemin) xupdatemin=x;
@@ -85,7 +100,6 @@ void  GLCD_ST7565::drawchar(byte x, byte line, char c) {
 }
 
 void GLCD_ST7565::drawstringx(byte x, byte y, char *c) {
-	if ((y&7)==0) drawstring(x,(y>>3),c);  
   while (*c) {
     drawcharx(x, y, *c++);
     x += 6; // 6 pixels wide
@@ -98,6 +112,21 @@ void GLCD_ST7565::drawstringx(byte x, byte y, char *c) {
   }
 }
 
+void GLCD_ST7565::drawstringx_p(byte x, byte y, char *c) {
+  for (;;) {
+    char ch = pgm_read_byte(c++);
+    if (ch == 0)
+        break;
+    drawcharx(x, y, ch);
+    x += 6; // 6 pixels wide
+    if (x + 6 >= LCDWIDTH) {
+      x = 0;    // ran out of this line
+      if ((y+8) >= LCDHEIGHT)
+        return; // ran out of space :(
+      else y=y+8;
+    }
+  }
+}
 
 void  GLCD_ST7565::drawcharx(byte x, byte y, char c) {
 		if ((y&7)==0) drawchar(x,(y>>3),c);
