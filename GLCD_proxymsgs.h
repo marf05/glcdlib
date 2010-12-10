@@ -25,3 +25,4 @@
 #define REMOTELCDSCROLLDOWN 24 // 1 y pixels
 #define REMOTELCDSCROLLLEFT 25 // 1 x pixels
 #define REMOTELCDSCROLLRIGHT 26 // 1 x pixels
+#define REMOTELCDBACKLIGHT 27 // 1 x level

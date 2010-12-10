@@ -19,6 +19,7 @@ byte doublebuf[66];
 
 void setup () {
   glcd.begin();
+  glcd.backlight(255);
   glcd.drawstring(30,1,"JeePU Host");
   glcd.drawstring(16,3,"Group:");
   char t[4];
@@ -110,6 +111,8 @@ void processmessage(byte *data) {
     case REMOTELCDSCROLLLEFT: glcd.scrollleft(data[1]);
       break;
     case REMOTELCDSCROLLRIGHT: glcd.scrollright(data[1]);
+      break;
+    case REMOTELCDBACKLIGHT: glcd.backlight(data[1]);
       break;
   }
 }

@@ -174,6 +174,7 @@ void CalibrateTouch(){
 
 void setup(){
   glcd.begin();
+  glcd.backlight(255);
   CalibrateTouch();
   glcd.clear();
   glcd.display();

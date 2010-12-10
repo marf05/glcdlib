@@ -9,6 +9,7 @@ byte x=0;
 
 void setup () {
     glcd.begin();
+    glcd.backlight(255);
     glcd.display();
 }
 

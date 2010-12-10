@@ -75,6 +75,7 @@ class GLCD_ST7565 {
   GLCD_ST7565 () {}
 
   void begin();
+  void backlight(byte level);
   void st7565_init(void);
   void st7565_command(uint8_t c);
   void st7565_data(uint8_t c);

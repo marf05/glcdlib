@@ -31,6 +31,11 @@ void GLCD_proxy::drawbitmap(byte x, byte y,
 */
 }
 
+void GLCD_proxy::backlight(byte level) {
+	msg[0]=REMOTELCDBACKLIGHT;
+    sendlcdmessage(1);
+}
+
 void GLCD_proxy::drawstring(byte x, byte line, char *c) {
 	msg[0]=REMOTELCDDRAWSTRING;
 	msg[1]=x;
@@ -38,6 +43,21 @@ void GLCD_proxy::drawstring(byte x, byte line, char *c) {
 	byte p=4;
     while (*c)
         msg[p++]=*c++;
+	msg[3]=p-4;
+	sendlcdmessage(p);
+}
+
+void GLCD_proxy::drawstring_p(byte x, byte line, char *c) {
+	msg[0]=REMOTELCDDRAWSTRING;
+	msg[1]=x;
+	msg[2]=line;
+	byte p=4;
+    for (;;) {
+        char ch = pgm_read_byte(c++);
+        if (ch == 0)
+            break;
+        msg[p++]=ch;
+    }
 	msg[3]=p-4;
 	sendlcdmessage(p);
 }
@@ -62,6 +82,22 @@ void GLCD_proxy::drawstringx(byte x, byte y, char *c) {
     msg[3]=p-4;
 	sendlcdmessage(p);
 }
+
+void GLCD_proxy::drawstringx_p(byte x, byte y, char *c) {
+	msg[0]=REMOTELCDDRAWSTRINGX;
+	msg[1]=x;
+	msg[2]=y;
+	byte p=4;
+    for (;;) {
+        char ch = pgm_read_byte(c++);
+        if (ch == 0)
+            break;
+        msg[p++]=ch;
+    }
+    msg[3]=p-4;
+	sendlcdmessage(p);
+}
+
 void  GLCD_proxy::drawcharx(byte x, byte y, char c) {
 	msg[0]=REMOTELCDDRAWCHARX;
 	msg[1]=x;

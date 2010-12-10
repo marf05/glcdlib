@@ -16,10 +16,7 @@ void setup () {
     rf12_sleep(0);
     
     glcd.begin();
-#if 1    
-    pinMode(3, OUTPUT);
-    digitalWrite(3, 1); // turn the backlight on
-#endif
+    glcd.backlight(255);
 
     // draw a string at a location, use _p variant to reduce RAM use
     glcd.drawstring_p(40, 0, PSTR("ARDUINO"));

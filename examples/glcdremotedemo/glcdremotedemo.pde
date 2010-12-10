@@ -12,6 +12,7 @@ void setup () {
     rf12_initialize(1, RF12_868MHZ, 212);
     
     glcd.begin();
+    glcd.backlight(255);
     glcd.display();    
 }
 

@@ -48,6 +48,10 @@ void GLCD_ST7565::begin() {
     clear();
 }
 
+void GLCD_ST7565::backlight(byte level) {
+    analogWrite(3, level);
+}
+
 void GLCD_ST7565::drawbitmap(byte x, byte y, 
                         const byte *bitmap, byte w, byte h,
                         byte color) {
