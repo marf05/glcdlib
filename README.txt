@@ -5,7 +5,7 @@ To check out the latest version, use subversion:
 	svn co svn://svn.jeelabs.org/jeelabs/trunk/libraries/GLCDlib
 	
 For more information about subversion and source code from JeeLabs, see:
-	http://jeelabs.org/2010/12/14/source-code/
+	http://jeelabs.org/2010/12/15/subversion/
 	
 --------------------------------------------------------------------------------
 
