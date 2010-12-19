@@ -22,8 +22,8 @@ byte gLCDbuf[1024];
 
 // Uncomment one of the two following lines depending on the horizontal page bank arrangement on your display
 // If the top line is appearing halfway down the screen, try the other map.
-// const uint8_t pagemap[] = { 0,1,2,3,4,5,6,7 };   // Mapping for original blue/white Jeelabs LCD panel.
-const uint8_t pagemap[] = { 3,2,1,0,7,6,5,4 };   // Mapping for later silver/black LCD panel.
+const uint8_t pagemap[] = { 0,1,2,3,4,5,6,7 };   // Linear mapping.
+//const uint8_t pagemap[] = { 3,2,1,0,7,6,5,4 };   // Mapping if the screen appeared to have rolled
 
 // Switch from fast direct bit flipping to slower Arduino bit writes.
 //#define slowspi
