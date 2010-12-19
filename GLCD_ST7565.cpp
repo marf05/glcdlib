@@ -19,7 +19,13 @@ extern byte PROGMEM font5x7[];
 // the memory buffer for the LCD
 byte gLCDbuf[1024];
 
-// Switches from fast direct bit flipping to slower Arduino bit writes.
+
+// Uncomment one of the two following lines depending on the horizontal page bank arrangement on your display
+// If the top line is appearing halfway down the screen, try the other map.
+// const uint8_t pagemap[] = { 0,1,2,3,4,5,6,7 };   // Mapping for original blue/white Jeelabs LCD panel.
+const uint8_t pagemap[] = { 3,2,1,0,7,6,5,4 };   // Mapping for later silver/black LCD panel.
+
+// Switch from fast direct bit flipping to slower Arduino bit writes.
 //#define slowspi
 
 // This makes the library track where changes have occurred and only update the smallest rectangle required
@@ -568,7 +574,7 @@ void GLCD_ST7565::display(void) {
 #ifdef enablepartialupdate
 	if (xupdatemin<=xupdatemax) {
 		for (p=(yupdatemin>>3);p<=(yupdatemax>>3);p++) {
-	    st7565_command(CMD_SET_PAGE | (7-p));
+	    st7565_command(CMD_SET_PAGE | pagemap[(7-p)]);
 	    st7565_command(CMD_SET_COLUMN_UPPER | (((xupdatemin+LCDUNUSEDSTARTBYTES) >> 4) & 0x0F));
 	    st7565_command(CMD_SET_COLUMN_LOWER | ((xupdatemin+LCDUNUSEDSTARTBYTES) & 0x0F));
 	    st7565_command(CMD_RMW);
@@ -585,7 +591,7 @@ void GLCD_ST7565::display(void) {
 	}
 #else
   for(p = 0; p < 8; p++) {
-    st7565_command(CMD_SET_PAGE | (7-p));
+    st7565_command(CMD_SET_PAGE | pagemap[(7-p)]);
     st7565_command(CMD_SET_COLUMN_LOWER | ( LCDUNUSEDSTARTBYTES & 0x0F));
     st7565_command(CMD_SET_COLUMN_UPPER | ((LCDUNUSEDSTARTBYTES >> 4) & 0x0F));
     st7565_command(CMD_RMW);
@@ -631,7 +637,7 @@ void GLCD_ST7565::updatedisplayarea(byte x0,byte y0,byte x1,byte y1, byte reset=
   byte c, p;
 	if ((x0<=x1) && (y0<=y1)) {
 		for (p=(y0>>3);p<=(y1>>3);p++) {
-	    st7565_command(CMD_SET_PAGE | (7-p));
+	    st7565_command(CMD_SET_PAGE | pagemap[(7-p)]);
 	    st7565_command(CMD_SET_COLUMN_UPPER | (((x0+LCDUNUSEDSTARTBYTES) >> 4) & 0x0F));
 	    st7565_command(CMD_SET_COLUMN_LOWER | ((x0+LCDUNUSEDSTARTBYTES) & 0x0F));
 	    st7565_command(CMD_RMW);
