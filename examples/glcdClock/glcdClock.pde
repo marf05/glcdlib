@@ -18,7 +18,7 @@ static void drawDigit(byte x, byte d) {
     for (byte i = 0; i < 64; ++i) {
         long mask = pgm_read_dword(digit++);
         for (byte j = 0; j < 28; ++j)
-            glcd.setpixel(x + j, i, bitRead(mask, 27-j));
+            glcd.setPixel(x + j, i, bitRead(mask, 27-j));
     }
 }
 
@@ -34,7 +34,7 @@ void setup () {
     rtc.begin(DateTime (__DATE__, __TIME__));
     
     glcd.begin();
-    glcd.backlight(255);
+    glcd.backLight(255);
 
     drawDigit(0, 1);
 
@@ -48,8 +48,8 @@ void loop () {
     // minutes
     twoDigits(69, now.minute());
     // blinking colon
-    glcd.fillcircle(63, 24, 2, now.second() & 1);
-    glcd.fillcircle(63, 40, 2, now.second() & 1);
+    glcd.fillCircle(63, 24, 2, now.second() & 1);
+    glcd.fillCircle(63, 40, 2, now.second() & 1);
     // show it!
     glcd.display();
 }

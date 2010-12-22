@@ -9,24 +9,24 @@ byte x=0;
 
 void setup () {
     glcd.begin();
-    glcd.backlight(255);
+    glcd.backLight(255);
     glcd.display();
 }
 
 void loop () {
-//  glcd.fillrect(3,10,110,50,1);
-  glcd.drawline(0,0,127,63,1);
-  glcd.drawstring(x,0,"Hello");
+//  glcd.fillRect(3,10,110,50,1);
+  glcd.drawLine(0,0,127,63,1);
+  glcd.drawString(x,0,"Hello");
   glcd.display();
-  glcd.drawstringx(x+36,2,"Wo");
-  glcd.drawcharx(x+48,3,'r');
-  glcd.drawcharx(x+54,4,'l');
-  glcd.drawstringx(x+60,5,"d!");
+  glcd.drawStringX(x+36,2,"Wo");
+  glcd.drawCharX(x+48,3,'r');
+  glcd.drawCharX(x+54,4,'l');
+  glcd.drawStringX(x+60,5,"d!");
   if (((x+d)>55) || ((x+d)<0)) d=-d;
   x=x+d;
   glcd.display();
   delay(1000);
-  glcd.scrolldown(8);
+  glcd.scrollDown(8);
   glcd.display();
   delay(1000);
 }

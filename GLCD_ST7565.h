@@ -75,45 +75,45 @@ class GLCD_ST7565 {
   GLCD_ST7565 () {}
 
   void begin();
-  void backlight(byte level);
-  void st7565_init(void);
-  void st7565_command(uint8_t c);
-  void st7565_data(uint8_t c);
-  void st7565_set_brightness(uint8_t val);
-  void clear_display(void);
-  void clear_white();
+  void backLight(byte level);
+  void st7565_Init(void);
+  void st7565_Command(uint8_t c);
+  void st7565_Data(uint8_t c);
+  void st7565_Set_Brightness(uint8_t val);
+  void clearDisplay(void);
+  void clearWhite();
   void clear();
   void display();
 
-  void setpixel   (uint8_t x , uint8_t y   , uint8_t color);
-  void fillcircle (uint8_t x0, uint8_t y0  , uint8_t r , uint8_t color);
-  void drawcircle (uint8_t x0, uint8_t y0  , uint8_t r , uint8_t color);
-  void drawrect   (uint8_t x , uint8_t y   , uint8_t w , uint8_t h , uint8_t color);
-  void fillrect   (uint8_t x , uint8_t y   , uint8_t w , uint8_t h , uint8_t color);
-  void drawline   (uint8_t x0, uint8_t y0  , uint8_t x1, uint8_t y1, uint8_t color);
-  void drawchar   (uint8_t x , uint8_t line, char c );
-  void drawstring (uint8_t x , uint8_t line, char *c);
-  void drawstring_p (byte x, byte line, char *c);
-  void drawtriangle (uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t colour);
-  void filltriangle (uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t colour);
-  void updatedisplayarea(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1,uint8_t reset);
-  void setupdatearea(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1, uint8_t allowreduction);
+  void setPixel   (uint8_t x , uint8_t y   , uint8_t color);
+  void fillCircle (uint8_t x0, uint8_t y0  , uint8_t r , uint8_t color);
+  void drawCircle (uint8_t x0, uint8_t y0  , uint8_t r , uint8_t color);
+  void drawRect   (uint8_t x , uint8_t y   , uint8_t w , uint8_t h , uint8_t color);
+  void fillRect   (uint8_t x , uint8_t y   , uint8_t w , uint8_t h , uint8_t color);
+  void drawLine   (uint8_t x0, uint8_t y0  , uint8_t x1, uint8_t y1, uint8_t color);
+  void drawChar   (uint8_t x , uint8_t line, char c );
+  void drawString (uint8_t x , uint8_t line, char *c);
+  void drawString_P (byte x, byte line, char *c);
+  void drawTriangle (uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t colour);
+  void fillTriangle (uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t colour);
+  void updateDisplayArea(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1,uint8_t reset);
+  void setUpdateArea(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1, uint8_t allowReduction);
 		
-  void drawbitmap (uint8_t x, uint8_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color);
+  void drawBitmap (uint8_t x, uint8_t y, const uint8_t *bitmap, uint8_t w, uint8_t h, uint8_t color);
  
-  void drawcharx(uint8_t x, uint8_t y, char c);
-  void drawstringx(uint8_t x , uint8_t y, char *c);
-  void drawstringx_p (byte x, byte y, char *c);
-  void scrollup(uint8_t y);
-  void scrolldown(uint8_t y);
-  void scrollleft(uint8_t x);
-  void scrollright(uint8_t x);
+  void drawCharX(uint8_t x, uint8_t y, char c);
+  void drawStringX(uint8_t x , uint8_t y, char *c);
+  void drawStringX_P (byte x, byte y, char *c);
+  void scrollUp(uint8_t y);
+  void scrollDown(uint8_t y);
+  void scrollLeft(uint8_t x);
+  void scrollRight(uint8_t x);
   
 
  private:
-  void spiwrite(uint8_t c);
-  void setpixelnoregiontrack (uint8_t x, uint8_t y, uint8_t color);
-  void drawtriangleline(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t firstline, uint8_t *points,
+  void SPIWrite(uint8_t c);
+  void setPixelNoRegionTrack (uint8_t x, uint8_t y, uint8_t color);
+  void drawTriangleLine(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t firstLine, uint8_t *points,
                       uint8_t color);
   
 

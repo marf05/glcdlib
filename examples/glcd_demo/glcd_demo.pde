@@ -16,24 +16,24 @@ void setup () {
     rf12_sleep(0);
     
     glcd.begin();
-    glcd.backlight(255);
+    glcd.backLight(255);
 
     // draw a string at a location, use _p variant to reduce RAM use
-    glcd.drawstring_p(40, 0, PSTR("ARDUINO"));
-    glcd.drawstring_p(10, 2, PSTR("ST7565 128x64 GLCD"));
-    glcd.drawstring_p(22, 4, PSTR("Graphics Board"));
-    glcd.drawstring_p(20, 6, PSTR("JeeLabs.org/gb1"));
+    glcd.drawString_P(40, 0, PSTR("ARDUINO"));
+    glcd.drawString_P(10, 2, PSTR("ST7565 128x64 GLCD"));
+    glcd.drawString_P(22, 4, PSTR("Graphics Board"));
+    glcd.drawString_P(20, 6, PSTR("JeeLabs.org/gb1"));
 
-    glcd.drawcircle(5, 5, 5, WHITE);
-    glcd.fillcircle(121, 5, 5, WHITE);
-    glcd.fillcircle(6, 58, 5, WHITE);
-    glcd.drawcircle(121, 58, 5, WHITE);
+    glcd.drawCircle(5, 5, 5, WHITE);
+    glcd.fillCircle(121, 5, 5, WHITE);
+    glcd.fillCircle(6, 58, 5, WHITE);
+    glcd.drawCircle(121, 58, 5, WHITE);
 
-    glcd.drawline(40, 9, 81, 9, WHITE);
-    glcd.drawline(40, 11, 81, 11, WHITE);
-    glcd.drawline(0, 42, 14, 28, WHITE);
-    glcd.drawline(112, 42, 126, 28, WHITE);
-    glcd.drawrect(0, 28, 127, 15, WHITE);
+    glcd.drawLine(40, 9, 81, 9, WHITE);
+    glcd.drawLine(40, 11, 81, 11, WHITE);
+    glcd.drawLine(0, 42, 14, 28, WHITE);
+    glcd.drawLine(112, 42, 126, 28, WHITE);
+    glcd.drawRect(0, 28, 127, 15, WHITE);
 
     glcd.display();
     

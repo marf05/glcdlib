@@ -15,38 +15,38 @@ GLCD_proxy Remote LCD library!
 
 class GLCD_proxy {
     byte remoteId;
-	void sendlcdmessage(byte length);  
+	void sendLCDMessage(byte length);  
 	
 public:
     GLCD_proxy(byte nodeId) : remoteId (nodeId) {}
 
     void begin();
-    void backlight(byte level);
-    void clear_display();
-    void clear_white();
+    void backLight(byte level);
+    void clearDisplay();
+    void clearWhite();
     void clear();
     void display();
 
-    void setpixel   (byte x, byte y, byte color);
-    void fillcircle (byte x0, byte y0, byte r, byte color);
-    void drawcircle (byte x0, byte y0, byte r, byte color);
-    void drawrect   (byte x, byte y, byte w, byte h, byte color);
-    void fillrect   (byte x, byte y, byte w, byte h, byte color);
-    void drawline   (byte x0, byte y0, byte x1, byte y1, byte color);
-    void drawchar   (byte x, byte line, char c );
-    void drawstring (byte x, byte line, char *c);
-    void drawstring_p (byte x, byte line, char *c);
-    void drawtriangle (byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color);
-    void filltriangle (byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color);
-    void updatedisplayarea(byte x0,byte y0,byte x1,byte y1,byte reset =0);
-    void setupdatearea(byte x0,byte y0,byte x1,byte y1, byte allowreduction =0);
+    void setPixel   (byte x, byte y, byte color);
+    void fillCircle (byte x0, byte y0, byte r, byte color);
+    void drawCircle (byte x0, byte y0, byte r, byte color);
+    void drawRect   (byte x, byte y, byte w, byte h, byte color);
+    void fillRect   (byte x, byte y, byte w, byte h, byte color);
+    void drawLine   (byte x0, byte y0, byte x1, byte y1, byte color);
+    void drawChar   (byte x, byte line, char c );
+    void drawString (byte x, byte line, char *c);
+    void drawString_P (byte x, byte line, char *c);
+    void drawTriangle (byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color);
+    void fillTriangle (byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color);
+    void updateDisplayArea(byte x0,byte y0,byte x1,byte y1,byte reset =0);
+    void setUpdateArea(byte x0,byte y0,byte x1,byte y1, byte allowReduction =0);
 
-    void drawbitmap (byte x, byte y, const byte *bitmap, byte w, byte h, byte color);
-    void drawcharx(byte x, byte y, char c);
-    void drawstringx(byte x, byte line, char *c);
-    void drawstringx_p(byte x, byte line, char *c);
-    void scrollup(byte y);
-    void scrolldown(byte y);
-    void scrollleft(byte x);
-    void scrollright(byte x);
+    void drawBitmap (byte x, byte y, const byte *bitmap, byte w, byte h, byte color);
+    void drawCharX(byte x, byte y, char c);
+    void drawStringX(byte x, byte line, char *c);
+    void drawStringX_P(byte x, byte line, char *c);
+    void scrollUp(byte y);
+    void scrollDown(byte y);
+    void scrollLeft(byte x);
+    void scrollRight(byte x);
 };

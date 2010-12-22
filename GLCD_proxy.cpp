@@ -17,26 +17,26 @@ void GLCD_proxy::begin() {
     clear();    
 }
 
-void GLCD_proxy::drawbitmap(byte x, byte y, 
+void GLCD_proxy::drawBitmap(byte x, byte y, 
                         const byte *bitmap, byte w, byte h,
                         byte color) {
 /* Need to work out the messaging for bitmap sending
 	  for (byte j=0; j<h; j++) {
 	    for (byte i=0; i<w; i++ ) {
 	      if (pgm_read_byte(bitmap + i + (j/8)*w) & _BV(j%8)) {
-	        setpixel(x+i, y+j, color);
+	        setPixel(x+i, y+j, color);
 	      }
 	    }
 	  }
 */
 }
 
-void GLCD_proxy::backlight(byte level) {
+void GLCD_proxy::backLight(byte level) {
 	msg[0]=REMOTELCDBACKLIGHT;
-    sendlcdmessage(1);
+    sendLCDMessage(1);
 }
 
-void GLCD_proxy::drawstring(byte x, byte line, char *c) {
+void GLCD_proxy::drawString(byte x, byte line, char *c) {
 	msg[0]=REMOTELCDDRAWSTRING;
 	msg[1]=x;
 	msg[2]=line;
@@ -44,10 +44,10 @@ void GLCD_proxy::drawstring(byte x, byte line, char *c) {
     while (*c)
         msg[p++]=*c++;
 	msg[3]=p-4;
-	sendlcdmessage(p);
+	sendLCDMessage(p);
 }
 
-void GLCD_proxy::drawstring_p(byte x, byte line, char *c) {
+void GLCD_proxy::drawString_P(byte x, byte line, char *c) {
 	msg[0]=REMOTELCDDRAWSTRING;
 	msg[1]=x;
 	msg[2]=line;
@@ -59,20 +59,20 @@ void GLCD_proxy::drawstring_p(byte x, byte line, char *c) {
         msg[p++]=ch;
     }
 	msg[3]=p-4;
-	sendlcdmessage(p);
+	sendLCDMessage(p);
 }
 
-void  GLCD_proxy::drawchar(byte x, byte line, char c) {
+void  GLCD_proxy::drawChar(byte x, byte line, char c) {
 	msg[0]=REMOTELCDDRAWCHAR;
 	msg[1]=x;
 	msg[2]=line;
 	msg[3]=c;
-    sendlcdmessage(4);
+    sendLCDMessage(4);
 }
 
 // pixel vertical aligned text functions
 
-void GLCD_proxy::drawstringx(byte x, byte y, char *c) {
+void GLCD_proxy::drawStringX(byte x, byte y, char *c) {
 	msg[0]=REMOTELCDDRAWSTRINGX;
 	msg[1]=x;
 	msg[2]=y;
@@ -80,10 +80,10 @@ void GLCD_proxy::drawstringx(byte x, byte y, char *c) {
     while (*c)
         msg[p++]=*c++;
     msg[3]=p-4;
-	sendlcdmessage(p);
+	sendLCDMessage(p);
 }
 
-void GLCD_proxy::drawstringx_p(byte x, byte y, char *c) {
+void GLCD_proxy::drawStringX_P(byte x, byte y, char *c) {
 	msg[0]=REMOTELCDDRAWSTRINGX;
 	msg[1]=x;
 	msg[2]=y;
@@ -95,18 +95,18 @@ void GLCD_proxy::drawstringx_p(byte x, byte y, char *c) {
         msg[p++]=ch;
     }
     msg[3]=p-4;
-	sendlcdmessage(p);
+	sendLCDMessage(p);
 }
 
-void  GLCD_proxy::drawcharx(byte x, byte y, char c) {
+void  GLCD_proxy::drawCharX(byte x, byte y, char c) {
 	msg[0]=REMOTELCDDRAWCHARX;
 	msg[1]=x;
 	msg[2]=y;
 	msg[3]=c;
-    sendlcdmessage(4);
+    sendLCDMessage(4);
 }
 
-void GLCD_proxy::drawline(byte x0, byte y0, byte x1, byte y1, 
+void GLCD_proxy::drawLine(byte x0, byte y0, byte x1, byte y1, 
                       byte color) {
 	msg[0]=REMOTELCDDRAWLINE;
 	msg[1]=x0;
@@ -114,10 +114,10 @@ void GLCD_proxy::drawline(byte x0, byte y0, byte x1, byte y1,
 	msg[3]=x1;
 	msg[4]=y1;
 	msg[5]=color;
-	sendlcdmessage(6);
+	sendLCDMessage(6);
 }
 
-void GLCD_proxy::drawtriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color) {
+void GLCD_proxy::drawTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color) {
 	msg[0]=REMOTELCDDRAWTRIANGLE;
 	msg[1]=x0;
 	msg[2]=y0;
@@ -126,10 +126,10 @@ void GLCD_proxy::drawtriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte 
 	msg[5]=x2;
 	msg[6]=y2;
 	msg[7]=color;	
-	sendlcdmessage(8);
+	sendLCDMessage(8);
 }
 
-void GLCD_proxy::filltriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color) {
+void GLCD_proxy::fillTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color) {
 	msg[0]=REMOTELCDFILLTRIANGLE;
 	msg[1]=x0;
 	msg[2]=y0;
@@ -138,10 +138,10 @@ void GLCD_proxy::filltriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte 
 	msg[5]=x2;
 	msg[6]=y2;
 	msg[7]=color;	
-	sendlcdmessage(8);
+	sendLCDMessage(8);
 }
 
-void GLCD_proxy::fillrect(byte x, byte y, byte w, byte h, 
+void GLCD_proxy::fillRect(byte x, byte y, byte w, byte h, 
                       byte color) {
 	msg[0]=REMOTELCDFILLRECT;
 	msg[1]=x;
@@ -149,10 +149,10 @@ void GLCD_proxy::fillrect(byte x, byte y, byte w, byte h,
 	msg[3]=w;
 	msg[4]=h;
  	msg[5]=color;	
-	sendlcdmessage(6);
+	sendLCDMessage(6);
 }
 
-void GLCD_proxy::drawrect(byte x, byte y, byte w, byte h, 
+void GLCD_proxy::drawRect(byte x, byte y, byte w, byte h, 
                       byte color) {
 	msg[0]=REMOTELCDDRAWRECT;
 	msg[1]=x;
@@ -160,103 +160,103 @@ void GLCD_proxy::drawrect(byte x, byte y, byte w, byte h,
 	msg[3]=w;
 	msg[4]=h;
 	msg[5]=color;	
-	sendlcdmessage(6);
+	sendLCDMessage(6);
 }
 
-void GLCD_proxy::drawcircle(byte x0, byte y0, byte r, 
+void GLCD_proxy::drawCircle(byte x0, byte y0, byte r, 
                         byte color) {
 	msg[0]=REMOTELCDDRAWCIRCLE;
 	msg[1]=x0;
 	msg[2]=y0;
 	msg[3]=r;
 	msg[4]=color;	
-	sendlcdmessage(5);
+	sendLCDMessage(5);
 }
 
-void GLCD_proxy::fillcircle(byte x0, byte y0, byte r, byte color) {
+void GLCD_proxy::fillCircle(byte x0, byte y0, byte r, byte color) {
 
 	msg[0]=REMOTELCDFILLCIRCLE;
 	msg[1]=x0;
 	msg[2]=y0;
 	msg[3]=r;
 	msg[4]=color;	
-	sendlcdmessage(5);
+	sendLCDMessage(5);
 }
 
-void GLCD_proxy::setpixel(byte x, byte y, byte color) {
+void GLCD_proxy::setPixel(byte x, byte y, byte color) {
 	msg[0]=REMOTELCDSETPIXEL;
 	msg[1]=x;
 	msg[2]=y;
 	msg[3]=color;	
-	sendlcdmessage(4);
+	sendLCDMessage(4);
 }
 
 void GLCD_proxy::display() {
 	msg[0]=REMOTELCDDISPLAY;
-	sendlcdmessage(1);	
+	sendLCDMessage(1);	
 }
 
-void GLCD_proxy::setupdatearea(byte x0,byte y0,byte x1,byte y1, byte allowreduction) {
+void GLCD_proxy::setUpdateArea(byte x0,byte y0,byte x1,byte y1, byte allowReduction) {
 	msg[0]=REMOTELCDSETUPDATEAREA;
 	msg[1]=x0;
 	msg[2]=y0;
 	msg[3]=x1;
 	msg[4]=y1;
-	msg[5]=allowreduction;	
-	sendlcdmessage(6);
+	msg[5]=allowReduction;	
+	sendLCDMessage(6);
 }
 
-void GLCD_proxy::updatedisplayarea(byte x0,byte y0,byte x1,byte y1, byte reset) {
+void GLCD_proxy::updateDisplayArea(byte x0,byte y0,byte x1,byte y1, byte reset) {
 	msg[0]=REMOTELCDUPDATEAREA;
 	msg[1]=x0;
 	msg[2]=y0;
 	msg[3]=x1;
 	msg[4]=y1;
 	msg[5]=reset;	
-	sendlcdmessage(6);
+	sendLCDMessage(6);
 }
 
-void GLCD_proxy::scrollup(byte y) {
+void GLCD_proxy::scrollUp(byte y) {
 	msg[0]=REMOTELCDSCROLLUP;
 	msg[1]=y;
-	sendlcdmessage(2);
+	sendLCDMessage(2);
 }
 
-void GLCD_proxy::scrolldown(byte y) {
+void GLCD_proxy::scrollDown(byte y) {
 	msg[0]=REMOTELCDSCROLLDOWN;
 	msg[1]=y;
-	sendlcdmessage(2);
+	sendLCDMessage(2);
 }
 
-void GLCD_proxy::scrollleft(byte x) {
+void GLCD_proxy::scrollLeft(byte x) {
 	msg[0]=REMOTELCDSCROLLLEFT;
 	msg[1]=x;
-	sendlcdmessage(2);
+	sendLCDMessage(2);
 }
 
-void GLCD_proxy::scrollright(byte x) {
+void GLCD_proxy::scrollRight(byte x) {
 	msg[0]=REMOTELCDSCROLLRIGHT;
 	msg[1]=x;
-	sendlcdmessage(2);
+	sendLCDMessage(2);
 }
 
 void GLCD_proxy::clear() {
     msg[0]=REMOTELCDCLEAR;
-	sendlcdmessage(1);
+	sendLCDMessage(1);
 }
 
-void GLCD_proxy::clear_white() {
+void GLCD_proxy::clearWhite() {
     msg[0]=REMOTELCDCLEARWHITE;
-	sendlcdmessage(1);
+	sendLCDMessage(1);
 }
 
 // this doesnt touch the buffer, just clears the display RAM - might be handy
-void GLCD_proxy::clear_display() {
+void GLCD_proxy::clearDisplay() {
     msg[0]=REMOTELCDCLEARBUF;
-	sendlcdmessage(1);
+	sendLCDMessage(1);
 }
 
-void GLCD_proxy::sendlcdmessage(byte length) {
+void GLCD_proxy::sendLCDMessage(byte length) {
 	while (!rf12_canSend())
 		rf12_recvDone();
 	rf12_sendStart(remoteId, msg, length, 1);

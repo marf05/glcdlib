@@ -47,14 +47,14 @@ void GetTouchPos(byte raw=0){
   //xLow has analog port -14 !!
   ypos=xport.anaRead();
   if ((xpos!=0) && (ypos!=0)) {
-    if (raw==0) {
+    if (raw==0) {   // optional raw parameter used to leave the raw values for use by the calibrate routine
 /*
       char t[6];
-      glcd.fillrect(0,0,20,16,0);
+      glcd.fillRect(0,0,20,16,0);
       itoa(xpos,t,10);
-      glcd.drawstringx(0,0,t);
+      glcd.drawStringX(0,0,t);
       itoa(ypos,t,10);
-      glcd.drawstringx(0,8,t);
+      glcd.drawStringX(0,8,t);
       glcd.display();
 */
 
@@ -76,11 +76,11 @@ void GetTouchPos(byte raw=0){
         ypos=int(temp);
       }
 /*
-      glcd.fillrect(100,0,20,16,0);
+      glcd.fillRect(100,0,20,16,0);
       itoa(xpos,t,10);
-      glcd.drawstringx(100,0,t);
+      glcd.drawStringX(100,0,t);
       itoa(ypos,t,10);
-      glcd.drawstringx(100,8,t);
+      glcd.drawStringX(100,8,t);
       glcd.display();
 */
     }
@@ -93,23 +93,23 @@ void GetTouchPos(byte raw=0){
 
 void CalibrateTouch(){
   glcd.clear();  
-  glcd.drawstringx(3,25,"Touch the two corner");
-  glcd.drawstringx(3,33,"points when they are");
-  glcd.drawstringx(36,41,"indicated");
-  glcd.drawtriangle(2,2,8,2,2,8,1);
-  glcd.drawline(5,5,8,8,1);
+  glcd.drawStringX(3,25,"Touch the two corner");
+  glcd.drawStringX(3,33,"points when they are");
+  glcd.drawStringX(36,41,"indicated");
+  glcd.drawTriangle(2,2,8,2,2,8,1);
+  glcd.drawLine(5,5,8,8,1);
   glcd.display();
 
   GetTouchPos(1);
   while ((xpos==-1) || (ypos==-1)){
-    glcd.setpixel(0,0,1);
+    glcd.setPixel(0,0,1);
     glcd.display();
     for (byte i=0;i<50;i++) {
       GetTouchPos(1);
       if (xpos!=-1) break;
     }
     if (xpos==-1) {
-      glcd.setpixel(0,0,0);
+      glcd.setPixel(0,0,0);
       glcd.display();
       for (byte i=0;i<50;i++) {
         GetTouchPos(1);
@@ -121,20 +121,20 @@ void CalibrateTouch(){
   int tempylow=ypos;
   while (xpos!=-1) GetTouchPos(1);
   glcd.clear();
-  glcd.drawtriangle(LCDWIDTH-3,LCDHEIGHT-3,LCDWIDTH-9,LCDHEIGHT-3,LCDWIDTH-3,LCDHEIGHT-9,1);
-  glcd.drawline(LCDWIDTH-6,LCDHEIGHT-6,LCDWIDTH-9,LCDHEIGHT-9,1);
+  glcd.drawTriangle(LCDWIDTH-3,LCDHEIGHT-3,LCDWIDTH-9,LCDHEIGHT-3,LCDWIDTH-3,LCDHEIGHT-9,1);
+  glcd.drawLine(LCDWIDTH-6,LCDHEIGHT-6,LCDWIDTH-9,LCDHEIGHT-9,1);
 
   glcd.display();
   
   while ((xpos==-1) || (ypos==-1)){
-    glcd.setpixel(LCDWIDTH-1,LCDHEIGHT-1,1);
+    glcd.setPixel(LCDWIDTH-1,LCDHEIGHT-1,1);
     glcd.display();
     for (byte i=0;i<50;i++) {
       GetTouchPos(1);
       if (xpos!=-1) break;
     }
     if (xpos==-1) {
-      glcd.setpixel(LCDWIDTH-1,LCDHEIGHT-1,0);
+      glcd.setPixel(LCDWIDTH-1,LCDHEIGHT-1,0);
       glcd.display();
       for (byte i=0;i<50;i++) {
         GetTouchPos(1);
@@ -150,18 +150,18 @@ void CalibrateTouch(){
 /*
   char t[6];
   itoa(xlow,t,10);
-  glcd.drawstringx(0,0,t);
+  glcd.drawStringX(0,0,t);
   itoa(xhigh,t,10);
-  glcd.drawstringx(40,0,t);
+  glcd.drawStringX(40,0,t);
   itoa(ylow,t,10);
-  glcd.drawstringx(0,8,t);
+  glcd.drawStringX(0,8,t);
   itoa(yhigh,t,10);
-  glcd.drawstringx(40,8,t);
+  glcd.drawStringX(40,8,t);
 */
-  glcd.drawstringx(25,20,"Thank you");
-  glcd.drawstringx(3,28,"Press OK to continue");
-  glcd.drawstringx(52,42,"OK");
-  glcd.drawrect(50,40,15,11,1);
+  glcd.drawStringX(25,20,"Thank you");
+  glcd.drawStringX(3,28,"Press OK to continue");
+  glcd.drawStringX(52,42,"OK");
+  glcd.drawRect(50,40,15,11,1);
   glcd.display();  
 
   while ((xpos<50) || (xpos>65) || (ypos<40) || (ypos>51)) {
@@ -174,7 +174,7 @@ void CalibrateTouch(){
 
 void setup(){
   glcd.begin();
-  glcd.backlight(255);
+  glcd.backLight(255);
   CalibrateTouch();
   glcd.clear();
   glcd.display();
@@ -183,7 +183,7 @@ void setup(){
 void loop(){
   GetTouchPos();
   if (xpos!=-1) {
-    glcd.setpixel(xpos,ypos,1);
+    glcd.setPixel(xpos,ypos,1);
     glcd.display();
   }
 }
