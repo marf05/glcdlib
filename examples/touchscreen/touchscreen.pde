@@ -1,3 +1,10 @@
+/*
+$Id: glcdhost.pde 6525 2010-12-22 22:37:37Z sevans $
+
+Touch screen demonstration program.
+
+*/
+
 #include "GLCD_ST7565.h"
 #include <Ports.h>
 #include <RF12.h> // needed to avoid a linker error :(

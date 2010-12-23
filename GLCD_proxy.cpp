@@ -216,28 +216,11 @@ void GLCD_proxy::updateDisplayArea(byte x0,byte y0,byte x1,byte y1, byte reset) 
 	sendLCDMessage(6);
 }
 
-void GLCD_proxy::scrollUp(byte y) {
-	msg[0]=REMOTELCDSCROLLUP;
-	msg[1]=y;
-	sendLCDMessage(2);
-}
-
-void GLCD_proxy::scrollDown(byte y) {
-	msg[0]=REMOTELCDSCROLLDOWN;
-	msg[1]=y;
-	sendLCDMessage(2);
-}
-
-void GLCD_proxy::scrollLeft(byte x) {
-	msg[0]=REMOTELCDSCROLLLEFT;
-	msg[1]=x;
-	sendLCDMessage(2);
-}
-
-void GLCD_proxy::scrollRight(byte x) {
-	msg[0]=REMOTELCDSCROLLRIGHT;
-	msg[1]=x;
-	sendLCDMessage(2);
+void GLCD_proxy::scroll(byte direction,byte y) {
+	msg[0]=REMOTELCDSCROLL;
+	msg[1]=direction;
+	msg[2]=y;
+	sendLCDMessage(3);
 }
 
 void GLCD_proxy::clear() {

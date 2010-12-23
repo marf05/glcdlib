@@ -1,3 +1,10 @@
+/*
+$Id$
+
+JeePU client example.
+
+*/
+
 #include <GLCD_proxy.h>
 #include <Ports.h>
 #include <RF12.h>
@@ -42,7 +49,7 @@ void loop () {
       glcd.setPixel(random(LCDWIDTH)-1,random(LCDHEIGHT)-1,1);
       glcd.display();
       if (i%60==0) {
-        glcd.scrollDown(8);
+        glcd.scroll(SCROLLDOWN,8);
         delay(10);
       }
     }

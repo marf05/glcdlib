@@ -693,6 +693,20 @@ void GLCD_ST7565::clearDisplay(void) {
   }
 }
 
+void GLCD_ST7565::scroll(byte direction, byte pixels) {
+  switch (direction)
+  {
+    case SCROLLUP: scrollUp(pixels);
+      break;
+    case SCROLLDOWN: scrollDown(pixels);
+      break;
+    case SCROLLLEFT: scrollLeft(pixels);
+      break;
+    case SCROLLRIGHT: scrollRight(pixels);
+      break;
+  }
+}
+
 void GLCD_ST7565::scrollUp(byte y) {
 	#ifdef enablePartialUpdate
 		xUpdateMin=0;	// set the partial update region to the whole screen

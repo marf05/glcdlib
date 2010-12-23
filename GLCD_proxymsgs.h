@@ -1,6 +1,3 @@
-#define LCDWIDTH				128
-#define LCDHEIGHT				64
-
 // messages
 #define REMOTELCDCLEAR 4 // 0 param
 #define REMOTELCDCLEARWHITE 5 // 0 param
@@ -21,8 +18,5 @@
 #define REMOTELCDCLEARBUF 20 // 0 param
 #define REMOTELCDDRAWCHARX 21 // 3 params x,Y,char
 #define REMOTELCDDRAWSTRINGX 22 // 3+ x,y,length,str.....
-#define REMOTELCDSCROLLUP 23 // 1 y pixels
-#define REMOTELCDSCROLLDOWN 24 // 1 y pixels
-#define REMOTELCDSCROLLLEFT 25 // 1 x pixels
-#define REMOTELCDSCROLLRIGHT 26 // 1 x pixels
-#define REMOTELCDBACKLIGHT 27 // 1 x level
+#define REMOTELCDSCROLL 23 // 2 direction, pixels
+#define REMOTELCDBACKLIGHT 24 // 1 x level

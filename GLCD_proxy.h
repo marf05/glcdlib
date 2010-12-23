@@ -13,6 +13,12 @@ GLCD_proxy Remote LCD library!
 #define LCDWIDTH				128
 #define LCDHEIGHT				64
 
+#define SCROLLUP 			1
+#define SCROLLDOWN		2
+#define SCROLLLEFT		3
+#define SCROLLRIGHT		4
+
+
 class GLCD_proxy {
     byte remoteId;
 	void sendLCDMessage(byte length);  
@@ -45,8 +51,5 @@ public:
     void drawCharX(byte x, byte y, char c);
     void drawStringX(byte x, byte line, char *c);
     void drawStringX_P(byte x, byte line, char *c);
-    void scrollUp(byte y);
-    void scrollDown(byte y);
-    void scrollLeft(byte x);
-    void scrollRight(byte x);
+    void scroll(byte direction, byte pixels);
 };

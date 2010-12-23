@@ -1,3 +1,10 @@
+/*
+$Id: glcdhost.pde 6525 2010-12-22 22:37:37Z sevans $
+
+gLCD scroll example.
+
+*/
+
 #include <GLCD_ST7565.h>
 #include <Ports.h>
 #include <RF12.h> // needed to avoid a linker error :(
@@ -26,7 +33,7 @@ void loop () {
   x=x+d;
   glcd.display();
   delay(1000);
-  glcd.scrollDown(8);
+  glcd.scroll(SCROLLDOWN,8);
   glcd.display();
   delay(1000);
 }
