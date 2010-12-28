@@ -50,7 +50,7 @@ void GLCD_ST7565::begin() {
     st7565_Init();
     st7565_Command(CMD_DISPLAY_ON);
     st7565_Command(CMD_SET_ALLPTS_NORMAL);
-    st7565_Set_Brightness(0x15);
+    st7565_Set_Brightness(0x15); // strictly speaking this is the contrast of the LCD panel, the twist on the crystals.
     clear();
 }
 
