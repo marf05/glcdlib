@@ -35,7 +35,7 @@ void setup () {
     glcd.drawLine(112, 42, 126, 28, WHITE);
     glcd.drawRect(0, 28, 127, 15, WHITE);
 
-    glcd.display();
+    glcd.refresh();
     
     Sleepy::powerDown(); // power consumption is now only the GLCD + backlight
 }

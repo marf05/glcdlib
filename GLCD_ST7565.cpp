@@ -2,7 +2,7 @@
 // $Id$
 //
 // Originally derived from code by cstone@pobox.com and Limor Fried / Adafruit.
-// Massive changes by Steve Evans and Jean-Claude Wippler, see GLCD_ST7565.cpp
+// Massive changes by Steve Evans and Jean-Claude Wippler, Dec 2010 to Jan 2011.
 
 #include <avr/pgmspace.h>
 #include <WProgram.h>
@@ -463,7 +463,7 @@ void GLCD_ST7565::fillCircle(byte x0, byte y0, byte r, byte color) {
     }
 }
 
-void GLCD_ST7565::display() {
+void GLCD_ST7565::refresh() {
 #ifdef enablePartialUpdate
     if (xUpdateMin<=xUpdateMax) {
         for (byte p = yUpdateMin>>3; p <= yUpdateMax>>3; ++p) {
@@ -477,8 +477,8 @@ void GLCD_ST7565::display() {
             for (byte c = xUpdateMin; c <=xUpdateMax; c++)
                 st7565_Data(gLCDBuf[(128*p)+c]);
         }
-        xUpdateMax = 0;
         // after the screen update, reset the redraw region to nothing.
+        xUpdateMax = 0;
         yUpdateMax = 0;
         xUpdateMin = LCDWIDTH-1;
         yUpdateMin = LCDHEIGHT-1;
@@ -559,32 +559,6 @@ void GLCD_ST7565::clear() {
     xUpdateMax = LCDWIDTH-1;
     yUpdateMax = LCDHEIGHT-1;
 #endif
-}
-
-
-// clear everything
-void GLCD_ST7565::clearWhite(void) {
-    memset(gLCDBuf, 0xFF, sizeof gLCDBuf);
-#ifdef enablePartialUpdate
-    xUpdateMin = 0;   // set the partial update region to the whole screen
-    yUpdateMin = 0;
-    xUpdateMax = LCDWIDTH-1;
-    yUpdateMax = LCDHEIGHT-1;
-#endif
-}
-
-
-// this doesnt touch the buffer, just clears the display RAM - might be handy
-void GLCD_ST7565::clearDisplay(void) {
-    for (byte p = 0; p < 8; p++) {
-        setPage(p);
-        for (byte c = LCDUNUSEDSTARTBYTES;
-                              c < LCDWIDTH+LCDUNUSEDSTARTBYTES; ++c) {
-            st7565_Command(CMD_SET_COLUMN_LOWER | (c & 0x0F));
-            st7565_Command(CMD_SET_COLUMN_UPPER | ((c >> 4) & 0x0F));
-            st7565_Data(0x00);
-        }     
-    }
 }
 
 static void st7565_scrollUp(byte y) {

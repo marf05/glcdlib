@@ -24,10 +24,8 @@ public:
 
     void begin();
     void backLight(byte level);
-    void clearDisplay();
-    void clearWhite();
     void clear();
-    void display();
+    void refresh();
 
     void setPixel   (byte x, byte y, byte color);
     void fillCircle (byte x0, byte y0, byte r, byte color);

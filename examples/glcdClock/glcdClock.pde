@@ -35,10 +35,6 @@ void setup () {
     
     glcd.begin();
     glcd.backLight(255);
-
-    drawDigit(0, 1);
-
-    glcd.display();
 }
 
 void loop () {
@@ -51,5 +47,5 @@ void loop () {
     glcd.fillCircle(63, 24, 2, now.second() & 1);
     glcd.fillCircle(63, 40, 2, now.second() & 1);
     // show it!
-    glcd.display();
+    glcd.refresh();
 }
