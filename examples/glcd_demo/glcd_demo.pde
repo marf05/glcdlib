@@ -10,8 +10,6 @@
 GLCD_ST7565 glcd;
 
 void setup () {
-    Serial.begin(57600);
-    Serial.println("\n[glcd_demo]");
     rf12_initialize(1, RF12_868MHZ);
     rf12_sleep(0);
     
@@ -19,10 +17,10 @@ void setup () {
     glcd.backLight(255);
 
     // draw a string at a location, use _p variant to reduce RAM use
-    glcd.drawString_p(40,  0, PSTR("GLCDlib"));
-    glcd.drawString_p(10, 16, PSTR("ST7565 128x64 GLCD"));
-    glcd.drawString_p(22, 32, PSTR("Graphics Board"));
-    glcd.drawString_p(20, 48, PSTR("JeeLabs.org/gb1"));
+    glcd.drawString_P(40,  0, PSTR("GLCDlib"));
+    glcd.drawString_P(10, 16, PSTR("ST7565 128x64 GLCD"));
+    glcd.drawString_P(22, 32, PSTR("Graphics Board"));
+    glcd.drawString_P(20, 48, PSTR("JeeLabs.org/gb1"));
 
     glcd.drawCircle(5, 5, 5, WHITE);
     glcd.fillCircle(121, 5, 5, WHITE);

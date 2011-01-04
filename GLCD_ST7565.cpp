@@ -215,7 +215,7 @@ void GLCD_ST7565::drawString(byte x, byte y, const char *c) {
     }
 }
 
-void GLCD_ST7565::drawString_p(byte x, byte y, const char *c) {
+void GLCD_ST7565::drawString_P(byte x, byte y, const char *c) {
     for (;;) {
         char ch = pgm_read_byte(c++);
         if (ch == 0)

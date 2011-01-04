@@ -40,7 +40,7 @@ void GLCD_proxy::drawString(byte x, byte y, const char *c) {
     sendLCDMessage(p - msg);
 }
 
-void GLCD_proxy::drawString_p(byte x, byte y, const char *c) {
+void GLCD_proxy::drawString_P(byte x, byte y, const char *c) {
     msg[0]=REMOTE_GLCD_DRAWSTRING;
     msg[1]=x;
     msg[2]=y;
