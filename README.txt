@@ -11,4 +11,4 @@ For more information about subversion and source code from JeeLabs, see:
 
 This library lets an ATmega328 drive an ST7565-based GLCD display.
 
-First use by Jee Labs: http://jeelabs.org/2010/11/15/meet-the-graphics-board/
+First use by JeeLabs: http://jeelabs.org/2010/11/15/meet-the-graphics-board/
