@@ -16,13 +16,12 @@
 
 
 class GLCD_proxy {
-    byte remoteId;
     void sendLCDMessage(byte length);  
     
 public:
-    GLCD_proxy(byte nodeId) : remoteId (nodeId) {}
+    GLCD_proxy() {}
 
-    void begin();
+    void begin() {}
     void backLight(byte level);
     void clear();
     void refresh();

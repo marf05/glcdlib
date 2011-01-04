@@ -12,10 +12,6 @@
 
 static byte msg[66];
 
-void GLCD_proxy::begin() {
-    clear();    
-}
-
 void GLCD_proxy::drawBitmap(byte x, byte y, 
                         const byte *bitmap, byte w, byte h,
                         byte color) {

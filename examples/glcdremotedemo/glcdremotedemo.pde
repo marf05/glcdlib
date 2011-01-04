@@ -7,7 +7,7 @@
 
 #if REMOTE
 #include <GLCD_proxy.h>
-GLCD_proxy glcd (2); // ID of remote LCD host
+GLCD_proxy glcd;
 #else
 #include <GLCD_ST7565.h>
 GLCD_ST7565 glcd;
@@ -40,7 +40,7 @@ void loop () {
     glcd.drawLine(0,40,127,40,1);
     refreshAndWait();
     
-    glcd.drawString(8,32,"And some black dots");
+    glcd.drawString(8,32,"And make it dotted");
     refreshAndWait();
     
     for (int i=0;i<=21;i++)
@@ -73,7 +73,7 @@ void loop () {
     refreshAndWait();
 
     glcd.clear();  
-    glcd.drawString(8,32,"Rectangle?");
+    glcd.drawString(8,32,"Rectangle");
     refreshAndWait();
     
     glcd.drawRect(2,2,64,50,1);    
@@ -84,7 +84,7 @@ void loop () {
     refreshAndWait();
     
     glcd.clear();
-    glcd.drawString(8,32,"circle?");
+    glcd.drawString(8,32,"Circle");
     refreshAndWait();
     
     glcd.drawCircle(63,31,31,1);    
@@ -95,7 +95,7 @@ void loop () {
     refreshAndWait();
     
     glcd.clear();
-    glcd.drawString(8,32,"Triangle?");
+    glcd.drawString(8,32,"Triangle");
     refreshAndWait();
     
     glcd.drawTriangle(0,0,30,63,80,20,1);
