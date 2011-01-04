@@ -40,6 +40,6 @@ public:
     void updateDisplayArea(byte x0,byte y0,byte x1,byte y1,byte reset =0);
     void setUpdateArea(byte x0,byte y0,byte x1,byte y1, byte allowReduction =0);
 
-    void drawBitmap (byte x, byte y, const byte *bitmap, byte w, byte h, byte color);
+    // void drawBitmap (byte x, byte y, const byte *bitmap, byte w, byte h, byte color);
     void scroll(byte direction, byte pixels);
 };

@@ -12,19 +12,16 @@
 
 static byte msg[66];
 
+#if 0
 void GLCD_proxy::drawBitmap(byte x, byte y, 
-                        const byte *bitmap, byte w, byte h,
-                        byte color) {
-/* Need to work out the messaging for bitmap sending
-    for (byte j=0; j<h; j++) {
-      for (byte i=0; i<w; i++ ) {
-        if (pgm_read_byte(bitmap + i + (j/8)*w) & _BV(j%8)) {
-          setPixel(x+i, y+j, color);
-        }
-      }
-    }
-*/
+                        const byte *bitmap, byte w, byte h, byte color) {
+// No bitmap support yet - perhaps send thin bands, each as one packet?
+    for (byte j=0; j<h; j++)
+        for (byte i=0; i<w; i++ )
+            if (pgm_read_byte(bitmap + i + (j/8)*w) & _BV(j%8))
+                setPixel(x+i, y+j, color);
 }
+#endif
 
 void GLCD_proxy::backLight(byte level) {
     msg[0]=REMOTE_GLCD_BACKLIGHT;
