@@ -4,7 +4,7 @@
 
 #include <GLCD_ST7565.h>
 #include <RTClib.h>
-// #include <Wire.h> // needed to avoid a linker error :(
+#include <Wire.h> // needed to avoid a linker error :(
 #include <Ports.h> // needed to avoid a linker error :(
 #include <RF12.h> // needed to avoid a linker error :(
 #include <avr/pgmspace.h>

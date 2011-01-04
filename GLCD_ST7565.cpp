@@ -5,7 +5,7 @@
 #include <util/delay.h>
 #include <stdlib.h>
 #include "GLCD_ST7565.h"
-#include "GLCD_ST7565_commands.h"
+#include "GLCD_ST7565_cmds.h"
 
 #define PIN_SID  14
 #define PIN_SCLK 4
@@ -253,19 +253,10 @@ void GLCD_ST7565::drawLine(byte x0, byte y0, byte x1, byte y1,
         swap(y0, y1);
     }
   
-    byte dx, dy;
-    dx = x1 - x0;
-    dy = abs(y1 - y0);
+    byte dx = x1 - x0, dy = abs(y1 - y0);
+    char err = dx / 2, ystep = y0 < y1 ? 1 : -1;
   
-    int8_t err = dx / 2;
-    int8_t ystep;
-  
-    if (y0 < y1)
-        ystep = 1;
-    else
-        ystep = -1;
-  
-    for (; x0<=x1; x0++) {
+    while (x0 <= x1) {
         if (steep)
             mySetPixel(y0, x0, color);
         else
@@ -275,6 +266,7 @@ void GLCD_ST7565::drawLine(byte x0, byte y0, byte x1, byte y1,
             y0 += ystep;
             err += dx;
         }
+        ++x0;
     }
 }
 
@@ -309,19 +301,10 @@ static void drawTriangleLine(byte x0, byte y0, byte x1, byte y1, byte firstLine,
         swap(y0, y1);
     }
 
-    byte dx, dy;
-    dx = x1 - x0;
-    dy = abs(y1 - y0);
+    byte dx = x1 - x0, dy = abs(y1 - y0);
+    char err = dx / 2, ystep = y0 < y1 ? 1 : -1;
 
-    int8_t err = dx / 2;
-    int8_t ystep;
-
-    if (y0 < y1)
-        ystep = 1;
-    else
-        ystep = -1;
-
-    for (; x0<=x1; x0++) {
+    while (x0 <= x1) {
         if (steep) {
             if (!firstLine)
                 GLCD_ST7565::drawLine(y0, x0, points[x0], x0, color);
@@ -338,6 +321,7 @@ static void drawTriangleLine(byte x0, byte y0, byte x1, byte y1, byte firstLine,
             y0 += ystep;
             err += dx;
         }
+        ++x0;
     }
 }
 
@@ -345,16 +329,16 @@ void GLCD_ST7565::fillTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte
     byte points[LCDHEIGHT]; // 64 bytes taken to store line points for fill.
     // first we need to find the highest and lowest point
     // a little unrolled bubble will do for 3 points
-    if (y2<y1) { swap(y1,y2); swap(x1,x2); }
-    if (y1<y0) { swap(y1,y0); swap(x1,x0); }
-    if (y2<y1) { swap(y1,y2); swap(x1,x2); }
+    if (y2 < y1) { swap(y1,y2); swap(x1,x2); }
+    if (y1 < y0) { swap(y1,y0); swap(x1,x0); }
+    if (y2 < y1) { swap(y1,y2); swap(x1,x2); }
     // Now y0 is the top and y2 is the bottom.
         
     // The longest(vertical) line generate the entries in points array
     // the other lines do the drawing
-    drawTriangleLine(x0,y0,x2,y2,1,points,color);
-    drawTriangleLine(x0,y0,x1,y1,0,points,color);
-    drawTriangleLine(x1,y1,x2,y2,0,points,color);
+    drawTriangleLine(x0, y0, x2, y2, 1, points, color);
+    drawTriangleLine(x0, y0, x1, y1, 0, points, color);
+    drawTriangleLine(x1, y1, x2, y2, 0, points, color);
 }
 
 // filled rectangle
@@ -403,11 +387,11 @@ void GLCD_ST7565::drawCircle(byte x0, byte y0, byte r, byte color) {
     if (y0+r > yUpdateMax) yUpdateMax = y0+r;   
 #endif
 
-    int8_t f = 1 - r;
-    int8_t ddF_x = 1;
-    int8_t ddF_y = -2 * r;
-    int8_t x = 0;
-    int8_t y = r;
+    char f = 1 - r;
+    char ddF_x = 1;
+    char ddF_y = -2 * r;
+    char x = 0;
+    char y = r;
   
     mySetPixel(x0, y0+r, color);
     mySetPixel(x0, y0-r, color);
@@ -445,11 +429,11 @@ void GLCD_ST7565::fillCircle(byte x0, byte y0, byte r, byte color) {
     if (y0+r > yUpdateMax) yUpdateMax = y0+r;   
 #endif
 
-    int8_t f = 1 - r;
-    int8_t ddF_x = 1;
-    int8_t ddF_y = -2 * r;
-    int8_t x = 0;
-    int8_t y = r;
+    char f = 1 - r;
+    char ddF_x = 1;
+    char ddF_y = -2 * r;
+    char x = 0;
+    char y = r;
 
     for (byte i=y0-r; i<=y0+r; i++)
         setPixel(x0, i, color);

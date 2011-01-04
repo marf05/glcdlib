@@ -70,42 +70,6 @@ void  GLCD_proxy::drawChar(byte x, byte line, char c) {
     sendLCDMessage(4);
 }
 
-// pixel vertical aligned text functions
-
-void GLCD_proxy::drawStringX(byte x, byte y, char *c) {
-	msg[0]=REMOTELCDDRAWSTRINGX;
-	msg[1]=x;
-	msg[2]=y;
-	byte p=4;
-    while (*c)
-        msg[p++]=*c++;
-    msg[3]=p-4;
-	sendLCDMessage(p);
-}
-
-void GLCD_proxy::drawStringX_P(byte x, byte y, char *c) {
-	msg[0]=REMOTELCDDRAWSTRINGX;
-	msg[1]=x;
-	msg[2]=y;
-	byte p=4;
-    for (;;) {
-        char ch = pgm_read_byte(c++);
-        if (ch == 0)
-            break;
-        msg[p++]=ch;
-    }
-    msg[3]=p-4;
-	sendLCDMessage(p);
-}
-
-void  GLCD_proxy::drawCharX(byte x, byte y, char c) {
-	msg[0]=REMOTELCDDRAWCHARX;
-	msg[1]=x;
-	msg[2]=y;
-	msg[3]=c;
-    sendLCDMessage(4);
-}
-
 void GLCD_proxy::drawLine(byte x0, byte y0, byte x1, byte y1, 
                       byte color) {
 	msg[0]=REMOTELCDDRAWLINE;
