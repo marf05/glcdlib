@@ -2,8 +2,10 @@
 // $Id$
 
 #define REMOTE 1    // set to 0 to use this sketch with a locally attached GLCD
-#define NETGROUP 212
-#define NODEID 1
+
+#define NODE_ID     1
+#define NODE_GROUP  212
+#define NODE_FREQ   RF12_868MHZ
 
 #if REMOTE
 #include <GLCD_proxy.h>
@@ -22,8 +24,10 @@ static void refreshAndWait() {
 }
 
 void setup () {
+    // Serial.begin(57600);
+    // Serial.println("\n[JeePU_demo]");
 #if REMOTE
-    rf12_initialize(NODEID, RF12_868MHZ, NETGROUP);
+    rf12_initialize(NODE_ID, NODE_FREQ, NODE_GROUP);
 #endif    
     glcd.begin();
     glcd.backLight(255);

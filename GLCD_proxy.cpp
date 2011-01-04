@@ -25,7 +25,8 @@ void GLCD_proxy::drawBitmap(byte x, byte y,
 
 void GLCD_proxy::backLight(byte level) {
     msg[0]=REMOTE_GLCD_BACKLIGHT;
-    sendLCDMessage(1);
+    msg[1]=level;
+    sendLCDMessage(2);
 }
 
 void GLCD_proxy::drawString(byte x, byte y, const char *c) {
@@ -180,7 +181,7 @@ void GLCD_proxy::sendLCDMessage(byte length) {
         // send packet out once we can
         while (!rf12_canSend())
             rf12_recvDone();
-        rf12_sendStart(RF12_HDR_ACK, msg, length);
+        rf12_sendStart(RF12_HDR_ACK, msg, length, 1);
         // wait up to 100 ms to get an ack back
         MilliTimer t;
         while (!t.poll(100)) {

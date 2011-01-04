@@ -1,36 +1,35 @@
 // JeePU Display driver host application.
 // $Id$
 
-#define Node_ID 2
-#define Node_group 212
-
 #include <GLCD_proxymsgs.h>
 #include <GLCD_ST7565.h>
 #include <Ports.h>
 #include <RF12.h>
 
-GLCD_ST7565 glcd;
+#define NODE_ID     31
+#define NODE_GROUP  212
+#define NODE_FREQ   RF12_868MHZ
 
+GLCD_ST7565 glcd;
 byte doubleBuf[66];
 
 void setup () {
+    // Serial.begin(57600);
+    // Serial.println("\n[JeePU]");
     glcd.begin();
     glcd.backLight(255);
     glcd.drawString(30,8,"JeePU Host");
     glcd.drawString(16,24,"Group:");
     char t[4];
-    itoa(Node_group,t,10);
+    itoa(NODE_GROUP,t,10);
     glcd.drawString(52,24,t);
   
     glcd.drawString(84,24,"ID:");
-    itoa(Node_ID,t,10);
+    itoa(NODE_ID,t,10);
     glcd.drawString(102,24,t);
     glcd.drawLine(30,16,89,16,1);
     glcd.refresh(); 
-    rf12_initialize(Node_ID, RF12_868MHZ, Node_group);
-    delay(1000);
-    rf12_recvDone();  
-    delay(1000);
+    rf12_initialize(NODE_ID, NODE_FREQ, NODE_GROUP);
 }
 
 void loop () {
