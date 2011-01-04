@@ -2,7 +2,7 @@
 // 2010-11-14 <jcw@equi4.com> http://opensource.org/licenses/mit-license.php
 // $Id$
 
-#include "GLCD_ST7565.h"
+#include <GLCD_ST7565.h>
 #include <Ports.h>
 #include <RF12.h> // needed to avoid a linker error :(
 #include <avr/pgmspace.h>
@@ -19,10 +19,10 @@ void setup () {
     glcd.backLight(255);
 
     // draw a string at a location, use _p variant to reduce RAM use
-    glcd.drawString_P(40, 0, PSTR("ARDUINO"));
-    glcd.drawString_P(10, 2, PSTR("ST7565 128x64 GLCD"));
-    glcd.drawString_P(22, 4, PSTR("Graphics Board"));
-    glcd.drawString_P(20, 6, PSTR("JeeLabs.org/gb1"));
+    glcd.drawString_p(40,  0, PSTR("GLCDlib"));
+    glcd.drawString_p(10, 16, PSTR("ST7565 128x64 GLCD"));
+    glcd.drawString_p(22, 32, PSTR("Graphics Board"));
+    glcd.drawString_p(20, 48, PSTR("JeeLabs.org/gb1"));
 
     glcd.drawCircle(5, 5, 5, WHITE);
     glcd.fillCircle(121, 5, 5, WHITE);
@@ -37,7 +37,7 @@ void setup () {
 
     glcd.display();
     
-    Sleepy::powerDown();
+    Sleepy::powerDown(); // power consumption is now only the GLCD + backlight
 }
 
 void loop () {}

@@ -41,7 +41,7 @@ public:
     void drawLine   (byte x0, byte y0, byte x1, byte y1, byte color);
     void drawChar   (byte x, byte line, char c );
     void drawString (byte x, byte line, char *c);
-    void drawString_P (byte x, byte line, char *c);
+    void drawString_p (byte x, byte line, char *c);
     void drawTriangle (byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color);
     void fillTriangle (byte x0, byte y0, byte x1, byte y1, byte x2, byte y2, byte color);
     void updateDisplayArea(byte x0,byte y0,byte x1,byte y1,byte reset =0);
