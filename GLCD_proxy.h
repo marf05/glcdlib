@@ -1,9 +1,5 @@
-/*
-$Id$
-
-GLCD_proxy Remote LCD library!
-
-*/
+// GLCD_proxy Remote LCD library.
+// $Id$
 
 #include <WProgram.h>
 
