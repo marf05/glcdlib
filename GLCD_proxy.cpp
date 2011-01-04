@@ -34,36 +34,32 @@ void GLCD_proxy::backLight(byte level) {
     sendLCDMessage(1);
 }
 
-void GLCD_proxy::drawString(byte x, byte line, char *c) {
+void GLCD_proxy::drawString(byte x, byte y, const char *c) {
   	msg[0]=REMOTE_GLCD_DRAWSTRING;
   	msg[1]=x;
-  	msg[2]=line;
-  	byte p=4;
-    while (*c)
-        msg[p++]=*c++;
-  	msg[3]=p-4;
-  	sendLCDMessage(p);
+  	msg[2]=y;
+  	byte* p = msg + 3;
+    do
+        *p = *c++;
+    while (*p++);
+  	sendLCDMessage(p - msg);
 }
 
-void GLCD_proxy::drawString_p(byte x, byte line, char *c) {
+void GLCD_proxy::drawString_p(byte x, byte y, const char *c) {
   	msg[0]=REMOTE_GLCD_DRAWSTRING;
   	msg[1]=x;
-  	msg[2]=line;
-  	byte p=4;
-    for (;;) {
-        char ch = pgm_read_byte(c++);
-        if (ch == 0)
-            break;
-        msg[p++]=ch;
-    }
-  	msg[3]=p-4;
-  	sendLCDMessage(p);
+  	msg[2]=y;
+  	byte* p = msg + 3;
+    do
+        *p = pgm_read_byte(c++);
+    while (*p++);
+  	sendLCDMessage(p - msg);
 }
 
-void  GLCD_proxy::drawChar(byte x, byte line, char c) {
+void  GLCD_proxy::drawChar(byte x, byte y, char c) {
   	msg[0]=REMOTE_GLCD_DRAWCHAR;
   	msg[1]=x;
-  	msg[2]=line;
+  	msg[2]=y;
   	msg[3]=c;
     sendLCDMessage(4);
 }

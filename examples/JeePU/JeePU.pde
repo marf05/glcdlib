@@ -35,8 +35,12 @@ void setup () {
 
 void loop () {
     if (rf12_recvDone() && rf12_crc == 0 && rf12_len > 0) {
+        // save msg in buffer and ack right away to keep things going
         memcpy(doubleBuf, (void*) rf12_data, rf12_len);
+        if (RF12_WANTS_ACK)
+            rf12_sendStart(RF12_ACK_REPLY, 0, 0, 1);
         rf12_recvDone();
+        // this may take some time, depending on the command received
         processmessage(doubleBuf);
     }
 }
@@ -66,14 +70,7 @@ void processmessage(byte *d) {
         case REMOTE_GLCD_DRAWCHAR: 
             glcd.drawChar(d[1],d[2],d[3]); break;
         case REMOTE_GLCD_DRAWSTRING:
-            if (d[3]<65) {
-                char text[66];
-                for (int i = 0; i < d[3]; ++i)
-                    text[i] = d[i+4];
-                text[d[3]] = 0;
-                glcd.drawString(d[1],d[2],text);
-            }
-            break;
+            glcd.drawString(d[1],d[2], (char*) &d[3]); break;
         case REMOTE_GLCD_UPDATEAREA:
             glcd.updateDisplayArea(d[1],d[2],d[3],d[4],d[5]); break;
         case REMOTE_GLCD_SETUPDATEAREA:
