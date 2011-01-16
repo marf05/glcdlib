@@ -7,47 +7,33 @@
 // With one change to the source code, as described in this weblog post:
 //      http://jeelabs.org/2010/11/17/room-node-display/
 
-#include "ST7565.h"
+#include <GLCD_ST7565.h>
 #include <Ports.h>
 #include <RF12.h>
 
-class GraphicsBoard : public ST7565, public Print {
+class GraphicsBoard : public GLCD_ST7565, public Print {
     byte x, y, dirty;
     MilliTimer refreshTimer;
     
     void newline() {
-        extern byte gLCDbuf[];
-        byte *p = gLCDbuf;
         x = 0;
-        if (++y >= 8) {
-            --y;
-            memcpy(gLCDbuf, gLCDbuf + 128, 1024 - 128);
-            memset(gLCDbuf + 1024 - 128, 0, 128);
-        }
+        if (y >= 56)
+            ;// scroll(SCROLLUP, 8);
+        else
+            y += 8;
     }
     
 public:
-    GraphicsBoard ()
-        : ST7565 (14, 4, 17, 7), x (0), y (0), dirty (0) {}
-    
-    void begin() {
-        st7565_init();
-        st7565_command(CMD_DISPLAY_ON);
-        st7565_command(CMD_SET_ALLPTS_NORMAL);
-        st7565_set_brightness(0x15);
-        clear();
-        display();
-    }
+    GraphicsBoard () : x (0), y (0), dirty (0) {}
     
     void poll(byte rate =100) {
         if (refreshTimer.poll(rate) && dirty) {
-            display();
+            refresh();
             dirty = 0;
         }
     }
     
     virtual void write(byte c) {
-        dirty = 1;
         if (c == '\r') {
             x = 0;
             return;
@@ -56,10 +42,11 @@ public:
             x = 127;
             return;
         }
-        if (x >= 126)
+        if (x > 122)
             newline();
-        drawchar(x, y, c);
+        drawChar(x, y, c);
         x += 6;
+        dirty = 1;
     }
 };
 
@@ -80,6 +67,7 @@ void setup () {
     Serial.println("\n[glcdNode]");
     rf12_initialize(1, RF12_868MHZ, 5);
     glcd.begin();
+    glcd.backLight(255);
     glcd.println(" <<< glcdNode.pde >>>");
 }
 
