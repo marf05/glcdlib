@@ -180,7 +180,7 @@ void GLCD_ST7565::drawBitmap(byte x, byte y,
 }
 
 void  GLCD_ST7565::drawChar(byte x, byte y, char c) {
-    if (y+8 < LCDHEIGHT) {          
+    if (y <= LCDHEIGHT - 8) {          
 #ifdef enablePartialUpdate
         if (x < xUpdateMin) xUpdateMin = x;
         if (y < yUpdateMin) yUpdateMin = y;

@@ -18,7 +18,7 @@ class GraphicsBoard : public GLCD_ST7565, public Print {
     void newline() {
         x = 0;
         if (y >= 56)
-            ;// scroll(SCROLLUP, 8);
+            scroll(SCROLLUP, 8);
         else
             y += 8;
     }
