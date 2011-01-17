@@ -12,3 +12,5 @@ For more information about subversion and source code from JeeLabs, see:
 This library lets an ATmega328 drive an ST7565-based GLCD display.
 
 First use by JeeLabs: http://jeelabs.org/2010/11/15/meet-the-graphics-board/
+
+Derived from code in the ST7565 library by Adafruit, hence the LGPL license.

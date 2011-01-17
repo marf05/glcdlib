@@ -3,6 +3,7 @@
 //
 // Originally derived from code by cstone@pobox.com and Limor Fried / Adafruit.
 // Massive changes by Steve Evans and Jean-Claude Wippler, see GLCD_ST7565.cpp
+// Licensed as LGPL.
 
 #include <WProgram.h>
 

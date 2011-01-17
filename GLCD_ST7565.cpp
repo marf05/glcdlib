@@ -3,6 +3,7 @@
 //
 // Originally derived from code by cstone@pobox.com and Limor Fried / Adafruit.
 // Massive changes by Steve Evans and Jean-Claude Wippler, Dec 2010 to Jan 2011.
+// Licensed as LGPL.
 
 #include <avr/pgmspace.h>
 #include <WProgram.h>
