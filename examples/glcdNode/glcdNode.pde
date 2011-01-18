@@ -2,10 +2,8 @@
 // 2010-11-15 <jcw@equi4.com> http://opensource.org/licenses/mit-license.php
 // $Id$
 
-// Note, this sketch requires the ST7565 library by Limor Fried, see:
-//      https://github.com/adafruit/ST7565-LCD
-// With one change to the source code, as described in this weblog post:
-//      http://jeelabs.org/2010/11/17/room-node-display/
+// Note, this sketch requires the GLCDlib library from JeeLabs
+// http://jeelabs.net/projects/cafe/wiki/GLCDlib
 
 #include <GLCD_ST7565.h>
 #include <Ports.h>
