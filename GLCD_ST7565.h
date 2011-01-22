@@ -26,7 +26,7 @@ public:
     static void backLight(byte level);
     static void clear();
     static void refresh();
-
+ 
     static void setPixel   (byte x , byte y   , byte color);
     static void fillCircle (byte x0, byte y0  , byte r , byte color);
     static void drawCircle (byte x0, byte y0  , byte r , byte color);
