@@ -8,15 +8,11 @@ uint8_t charR14[2156] PROGMEM = {
  /* char count: */ 95,
 (95x2 bytes of character info: img offset (8b), pre+4 (4b), post+4 (4b))
 // OVERFLOW POSITIONS:
-(one byte for each char index where the img offset overflowed)
+(one byte for each char index where the img offset will overflow)
 };
 
 10x20: 95 chars (32..127), 2029 bytes - monospaced
-12x13ja: 95 chars (32..127), 1722 bytes - monospaced
 12x24: 95 chars (32..127), 3438 bytes - monospaced
-12x24rk: 95 chars (32..127), 3438 bytes - monospaced
-18x18ja: 95 chars (32..127), 3430 bytes - monospaced
-18x18ko: 95 chars (32..127), 3430 bytes - monospaced
 4x6: 95 chars (32..127), 294 bytes - monospaced
 5x7: 95 chars (32..127), 426 bytes - monospaced
 5x8: 95 chars (32..127), 486 bytes - monospaced
@@ -35,7 +31,6 @@ uint8_t charR14[2156] PROGMEM = {
 8x13B: 95 chars (32..127), 1146 bytes - monospaced
 8x13O: 95 chars (32..127), 1146 bytes - monospaced
 8x16: 95 chars (32..127), 1526 bytes - monospaced
-8x16rk: 95 chars (32..127), 1526 bytes - monospaced
 9x15: 95 chars (32..127), 1504 bytes - monospaced
 9x15B: 95 chars (32..127), 1504 bytes - monospaced
 9x18: 95 chars (32..127), 1718 bytes - monospaced
