@@ -36,7 +36,7 @@ void setup () {
   glcd.drawString(x, 22, " & narrow...");
 
   glcd.setFont(font_clR4x6);
-  glcd.drawString(2, 37, "The quick brown fox jumped");
+  glcd.drawString(2, 37, "The quick brown fox jumps");
   glcd.drawString(5, 43, "over the lazy dog");
   glcd.drawString(8, 49, "0123456789");
   
