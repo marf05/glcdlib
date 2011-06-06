@@ -169,13 +169,13 @@ static void mySetPixel(byte x, byte y, byte color) {
 #endif
 }
 
-void myDrawFont (word x, byte w, const byte* bits, byte xo, byte yo) {
-  for (byte j = 0; j < fontInfo.height; ++j) {
-    for (byte i = 0; i < w; ++i )
-      if (pgm_read_byte((prog_uint8_t*) bits + (x+i) / 8) & bit((x+i) % 8))
-        GLCD_ST7565::setPixel(xo+i, yo+j, 1);
-    bits += fontInfo.width;
-  }
+static void myDrawFont (word x, byte w, const byte* bits, byte xo, byte yo) {
+    for (byte j = 0; j < fontInfo.height; ++j) {
+        for (byte i = 0; i < w; ++i )
+          if (pgm_read_byte((prog_uint8_t*) bits + (x+i) / 8) & bit((x+i) % 8))
+              GLCD_ST7565::setPixel(xo+i, yo+j, 1);
+        bits += fontInfo.width;
+    }
 }
 
 void GLCD_ST7565::drawBitmap(byte x, byte y, 
@@ -189,56 +189,55 @@ void GLCD_ST7565::drawBitmap(byte x, byte y,
 }
 
 byte GLCD_ST7565::setFont (const byte* font) {
-  prog_uint8_t* fp = (prog_uint8_t*) font;
-  fontInfo.height = pgm_read_byte(fp++);
-  fontInfo.width = pgm_read_byte(fp++);
-  fontInfo.image = fp;
-  fp += fontInfo.height * fontInfo.width;
-  fontInfo.first = pgm_read_byte(fp++);
-  fontInfo.count = pgm_read_byte(fp++);
-  fontInfo.widths = fp;
-  if (pgm_read_byte(fp) == 0) {
-    fp += fontInfo.count + fontInfo.count + 1;
-    fontInfo.overflow = fp;
-  } else {
-    fontInfo.overflow = 0;
-  }
-  return fontInfo.width;
+    prog_uint8_t* fp = (prog_uint8_t*) font;
+    fontInfo.height = pgm_read_byte(fp++);
+    fontInfo.width = pgm_read_byte(fp++);
+    fontInfo.image = fp;
+    fp += fontInfo.height * fontInfo.width;
+    fontInfo.first = pgm_read_byte(fp++);
+    fontInfo.count = pgm_read_byte(fp++);
+    fontInfo.widths = fp;
+    if (pgm_read_byte(fp) == 0) {
+        fp += fontInfo.count + fontInfo.count + 1;
+        fontInfo.overflow = fp;
+    } else
+        fontInfo.overflow = 0;
+    return fontInfo.width;
 }
 
 byte GLCD_ST7565::drawChar(byte x, byte y, char c) {
-  const struct FontInfo& fi = fontInfo;
-  if (c >= fi.first) {
-    c -= fi.first;
-    if (c < fi.count) {
-      byte pix = pgm_read_byte(fi.widths);
-      byte gaps = pgm_read_byte(fi.widths+1);
-      word pos = 0;
-      if (pix == 0) {
-        // adjust for offset overflows past 255
-        for (byte i = 0; ; ++i) {
-          byte o = pgm_read_byte(fi.overflow + i);
-          if (c <= o)
-            break;
-          pos += 256;
-        } 
-        // extract offset and gap info for this particular char index
-        prog_uint8_t* wp = fi.widths + 2 * c;
-        byte off = pgm_read_byte(wp++);
-        gaps = pgm_read_byte(wp++);
-        byte next = pgm_read_byte(wp);
-        // horizontal bitmap position and char width in pixels
-        pos += off;
-        pix = next - off;
-      } else
-        pos = c * pix; // mono-spaced fonts
-      char pre = (gaps & 0x0F) - 4;
-      char post = (gaps >> 4) - 4;
-      myDrawFont(pos, pix, fi.image, x + pre, y);
-      return pix + post;
+    const struct FontInfo& fi = fontInfo;
+    if (c >= fi.first) {
+        c -= fi.first;
+        if (c < fi.count) {
+            byte pix = pgm_read_byte(fi.widths);
+            byte gaps = pgm_read_byte(fi.widths+1);
+            word pos = 0;
+            if (pix == 0) {
+                // adjust for offset overflows past 255
+                for (byte i = 0; ; ++i) {
+                    byte o = pgm_read_byte(fi.overflow + i);
+                    if (c <= o)
+                        break;
+                    pos += 256;
+                } 
+                // extract offset and gap info for this particular char index
+                prog_uint8_t* wp = fi.widths + 2 * c;
+                byte off = pgm_read_byte(wp++);
+                gaps = pgm_read_byte(wp++);
+                byte next = pgm_read_byte(wp);
+                // horizontal bitmap position and char width in pixels
+                pos += off;
+                pix = next - off;
+            } else
+                pos = c * pix; // mono-spaced fonts
+            char pre = (gaps & 0x0F) - 4;
+            char post = (gaps >> 4) - 4;
+            myDrawFont(pos, pix, fi.image, x + pre, y);
+            return pix + post;
+        }
     }
-  }
-  return 0;
+    return 0;
 }
 
 byte GLCD_ST7565::drawString(byte x, byte y, const char *c) {
