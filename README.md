@@ -1,3 +1,5 @@
+Work in progress - see <http://forum.jeelabs.net/node/457>
+
 This library lets an ATmega328 drive an ST7565-based GLCD display.
 
 First use by JeeLabs: http://jeelabs.org/2010/11/15/meet-the-graphics-board/
