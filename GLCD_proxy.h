@@ -1,7 +1,7 @@
 // GLCD_proxy Remote LCD library.
-// $Id$
+// 2011-06-01 <jc@wippler.nl> http://opensource.org/licenses/mit-license.php
 
-#include <WProgram.h>
+#include <Arduino.h>
 
 #define BLACK           0
 #define WHITE           1

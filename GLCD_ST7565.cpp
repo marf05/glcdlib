@@ -1,11 +1,12 @@
-// Grpahics library for 128x64 display based on ST7565 (JeeLabs Graphics Board)
-// $Id$
+// Graphics library for 128x64 display based on ST7565 (JeeLabs Graphics Board)
 //
 // Originally derived from code by cstone@pobox.com and Limor Fried / Adafruit.
-// Massive changes by Steve Evans and Jean-Claude Wippler, Dec 2010 to Jan 2011.
+// Massive changes by Steve Evans and Jean-Claude Wippler, see GLCD_ST7565.cpp
 // Licensed as LGPL.
+//
+// 2011-06-01 <jc@wippler.nl>
 
-#include <WProgram.h>
+#include <Arduino.h>
 #include <avr/pgmspace.h>
 #include <util/delay.h>
 #include <stdlib.h>

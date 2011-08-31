@@ -1,12 +1,11 @@
 // GLCD_proxy Remote LCD library.
-// $Id$
+// 2011-01-04 <jc@wippler.nl> http://opensource.org/licenses/mit-license.php
 
 #include <avr/pgmspace.h>
-#include <WProgram.h>
+#include <Arduino.h>
 #include <util/delay.h>
 #include <stdlib.h>
-#include <Ports.h>
-#include <RF12.h>
+#include <JeeLib.h>
 #include "GLCD_proxy.h"
 #include "GLCD_proxymsgs.h"
 
